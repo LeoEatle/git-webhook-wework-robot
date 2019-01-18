@@ -1,13 +1,14 @@
-import * as Router from 'koa-router';
-import controller = require('./controller');
+import * as Router from "koa-router";
+import controller = require("./controller");
 
 const router = new Router();
 
 // GENERAL ROUTES
-router.get('/', controller.general.helloWorld);
-router.get('/jwt', controller.general.getJwtPayload);
+router.get("/", controller.general.helloWorld);
+router.get("/jwt", controller.general.getJwtPayload);
 
-router.get('/git', controller.gitWebhook.getWebhook);
+router.get("/git", controller.gitWebhook.getWebhook);
+router.post("/git", controller.gitWebhook.getWebhook);
 
 // USER ROUTES
 // router.get('/users', controller.user.getUsers);

@@ -1,56 +1,71 @@
 {
-  "name": "gitcode-wework-robot",
-  "version": "1.0.0",
-  "description": "连接git.code.oa.com和企业微信的机器人，监听git.code的webhook来推送push、PR等信息到群内。",
-  "main": "index.js",
-  "scripts": {
-    "start": "nodemon --watch 'src/**/*' -e ts,tsx --exec ts-node src/server.ts",
-    "build": "webpack --config webpack.config.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "http://git.code.oa.com/leoytliu/gitcode-wework-robot.git"
-  },
-  "keywords": [
-    "wework",
-    "robot",
-    "git.code"
-  ],
-  "author": "leoytliu",
-  "license": "ISC",
-  "devDependencies": {
-    "@types/dotenv": "^4.0.3",
-    "@types/koa": "2.0.44",
-    "@types/koa-bodyparser": "^4.2.0",
-    "@types/koa-helmet": "^3.1.2",
-    "@types/koa-jwt": "^3.3.0",
-    "@types/koa-router": "^7.0.28",
-    "@types/koa__cors": "^2.2.2",
-    "@types/node": "^10.7.0",
-    "@types/shelljs": "^0.8.0",
-    "nodemon": "^1.17.4",
-    "shelljs": "^0.8.2",
-    "ts-loader": "^5.3.3",
-    "ts-node": "^7.0.1",
-    "tslint": "^5.10.0",
-    "typescript": "^3.0.1",
-    "webpack": "^4.28.4",
-    "webpack-cli": "^3.2.1"
-  },
-  "dependencies": {
-    "@koa/cors": "^2.2.1",
-    "class-validator": "^0.9.1",
-    "dotenv": "^6.0.0",
-    "koa": "^2.5.1",
-    "koa-bodyparser": "^4.2.1",
-    "koa-helmet": "^4.0.0",
-    "koa-jwt": "^3.3.2",
-    "koa-router": "^7.4.0",
-    "pg": "^7.4.3",
-    "pg-connection-string": "^2.0.0",
-    "reflect-metadata": "^0.1.12",
-    "typeorm": "^0.2.6",
-    "winston": "^3.0.0"
-  }
+    "name": "gitcode-wework-robot",
+    "version": "1.0.0",
+    "description": "连接git.code.oa.com和企业微信的机器人，监听git.code的webhook来推送push、PR等信息到群内。",
+    "main": "index.js",
+    "scripts": {
+        "start": "nodemon --watch 'src/**/*' -e ts,tsx --exec ts-node src/server.ts",
+        "build": "webpack --config webpack.config.js",
+        "commit": "git-cz",
+        "precommit": "lint-staged",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "config": {
+        "commitizen": {
+            "path": "./node_modules/cz-conventional-changelog"
+        }
+    },
+    "lint-staged": {
+        "*.{js,json,css,less,ts,tsx,jsx,md}": [
+            "prettier --write",
+            "git add"
+        ]
+    },
+    "repository": {
+        "type": "git",
+        "url": "http://git.code.oa.com/leoytliu/gitcode-wework-robot.git"
+    },
+    "keywords": [
+        "wework",
+        "robot",
+        "git.code"
+    ],
+    "author": "leoytliu",
+    "license": "ISC",
+    "devDependencies": {
+        "@types/dotenv": "^4.0.3",
+        "@types/koa": "2.0.44",
+        "@types/koa-bodyparser": "^4.2.0",
+        "@types/koa-helmet": "^3.1.2",
+        "@types/koa-jwt": "^3.3.0",
+        "@types/koa-router": "^7.0.28",
+        "@types/koa__cors": "^2.2.2",
+        "@types/node": "^10.7.0",
+        "@types/shelljs": "^0.8.0",
+        "commitizen": "^3.0.5",
+        "commitlint": "^7.3.2",
+        "nodemon": "^1.17.4",
+        "shelljs": "^0.8.2",
+        "ts-loader": "^5.3.3",
+        "ts-node": "^7.0.1",
+        "tslint": "^5.10.0",
+        "typescript": "^3.0.1",
+        "webpack": "^4.28.4",
+        "webpack-cli": "^3.2.1"
+    },
+    "dependencies": {
+        "@koa/cors": "^2.2.1",
+        "class-validator": "^0.9.1",
+        "dotenv": "^6.0.0",
+        "koa": "^2.5.1",
+        "koa-bodyparser": "^4.2.1",
+        "koa-helmet": "^4.0.0",
+        "koa-jwt": "^3.3.2",
+        "koa-router": "^7.4.0",
+        "pg": "^7.4.3",
+        "pg-connection-string": "^2.0.0",
+        "reflect-metadata": "^0.1.12",
+        "typeorm": "^0.2.6",
+        "winston": "^3.0.0"
+    }
 }
