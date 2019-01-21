@@ -1,6 +1,6 @@
-import * as dotenv from 'dotenv';
+import * as dotenv from "dotenv";
 
-dotenv.config({ path: '.env' });
+dotenv.config({ path: ".env" });
 
 export interface IConfig {
     port: number;
@@ -12,10 +12,11 @@ export interface IConfig {
 
 const config: IConfig = {
     port: +process.env.PORT || 3000,
-    debugLogging: process.env.NODE_ENV == 'development',
-    dbsslconn: process.env.NODE_ENV != 'development',
-    jwtSecret: process.env.JWT_SECRET || 'your-secret-whatever',
-    databaseUrl: process.env.DATABASE_URL || 'postgres://user:pass@localhost:5432/apidb'
+    debugLogging: process.env.NODE_ENV == "development",
+    dbsslconn: process.env.NODE_ENV != "development",
+    jwtSecret: process.env.JWT_SECRET || "your-secret-whatever",
+    databaseUrl:
+        process.env.DATABASE_URL || "postgres://user:pass@localhost:5432/apidb"
 };
 
 export { config };

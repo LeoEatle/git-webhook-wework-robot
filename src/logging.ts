@@ -1,10 +1,9 @@
-import * as Koa from 'koa';
-import { config } from './config';
-import * as winston from 'winston';
+import * as Koa from "koa";
+import { config } from "./config";
+import * as winston from "winston";
 
 export function logger(winstonInstance) {
-    return async(ctx: Koa.Context, next: () => Promise<any>) => {
-
+    return async (ctx: Koa.Context, next: () => Promise<any>) => {
         const start = new Date().getMilliseconds();
 
         await next();
@@ -13,29 +12,36 @@ export function logger(winstonInstance) {
 
         let logLevel: string;
         if (ctx.status >= 500) {
-            logLevel = 'error';
+            logLevel = "error";
         }
         if (ctx.status >= 400) {
-            logLevel = 'warn';
+            logLevel = "warn";
         }
         if (ctx.status >= 100) {
-            logLevel = 'info';
+            logLevel = "info";
         }
 
-        const msg: string = `${ctx.method} ${ctx.originalUrl} ${ctx.status} ${ms}ms`;
+        const msg: string = `${ctx.method} ${ctx.originalUrl} ${
+            ctx.status
+        } ${ms}ms`;
 
         winstonInstance.configure({
-            level: config.debugLogging ? 'debug' : 'info',
+            level: config.debugLogging ? "debug" : "info",
             transports: [
                 //
                 // - Write all logs error (and below) to `error.log`.
-                new winston.transports.File({ filename: 'error.log', level: 'error' }),
+                new winston.transports.File({
+                    filename: "error.log",
+                    level: "error"
+                }),
                 //
                 // - Write to all logs with specified level to console.
-                new winston.transports.Console({ format: winston.format.combine(
-                    winston.format.colorize(),
-                    winston.format.simple()
-                  ) })
+                new winston.transports.Console({
+                    format: winston.format.combine(
+                        winston.format.colorize(),
+                        winston.format.simple()
+                    )
+                })
             ]
         });
 
