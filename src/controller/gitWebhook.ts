@@ -129,7 +129,7 @@ export default class GitWebhookController {
             const mdMsg = `项目 [${repository.name}](${repository.homepage}) 收到一次push提交
                            提交者:  \<font color= \"commit\"\>${user_name}\</font\>
                            分支:  \<font color= \"commit\"\>${branchName}\</font\>
-                           最新提交信息: \<font color= \"comment\"\>${lastCommit.message}\</font\>`;
+                           最新提交信息: ${lastCommit.message}`;
             return await robot.sendMdMsg(mdMsg);
         }
     }
@@ -148,7 +148,8 @@ export default class GitWebhookController {
             "open": "发起",
             "close": "关闭",
             "reopen": "重新发起",
-            "update": "更新"
+            "update": "更新",
+            "merge": "合并"
         };
         const {user, object_attributes} = body;
         const attr = object_attributes;
@@ -156,7 +157,7 @@ export default class GitWebhookController {
                         标题：${attr.title}
                         源分支：${attr.source_branch}
                         目标分支：${attr.target_branch}
-                        [点此查看](${attr.url})`;
+                        [查看MR详情](${attr.url})`;
         return await robot.sendMdMsg(mdMsg);
     }
 
