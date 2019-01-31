@@ -2,12 +2,26 @@
 
 # 如何使用
 
-打开gitcode项目，在`Setting` 中选择`Advanced Setting`，选中`Web Hooks`tab ，添加一个webhook。
+打开gitcode项目（gitlab项目通用），在`Setting` 中选择`Advanced Setting`，选中`Web Hooks`tab ，添加一个webhook。
 
-![](https://tuchuang-1251767583.cos.ap-guangzhou.myqcloud.com/%E4%BC%81%E4%B8%9A%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_8329e5fe-4d4e-4566-9571-f7891bf2daf0.png)
+![](https://tuchuang-1251767583.cos.ap-guangzhou.myqcloud.com/demo.png)
 
 目前在`10.125.60.95`这台机器上试水，所以可以配置url为`http://10.125.60.95:8080/git`
 
+## Push event
+如果有人push了新的提交，群里推送如图
+
+![](https://tuchuang-1251767583.cos.ap-guangzhou.myqcloud.com/push-demo.jpg)
+
+点击项目名称可以跳转到项目页面。
+
+## Merge Request
+如果有人发起了Merge Request，群里推送如图
+
+![](https://tuchuang-1251767583.cos.ap-guangzhou.myqcloud.com/mr-demo.png)
+
+Merge Request 会有发起、合并、关闭、重新发起等几种情况，文案会有所不同。
+## 机器人id配置
 目前这台机器上配置的机器人id为`7048958e-8b4b-4381-9758-af84347c240c`
 
 如果需要自定义机器人id，请修改项目根目录下的`.env`
@@ -41,7 +55,7 @@ interface Repository {
 
 git事件handler: `gitWebhook.ts`
 
-chatRobot: `chat.ts`
+chatRobot推送信息相关: `chat.ts`
 
 # TODO
 

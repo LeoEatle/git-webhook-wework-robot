@@ -91,7 +91,7 @@ const EVENTS = {
 };
 export default class GitWebhookController {
     public static async getWebhook(ctx: BaseContext) {
-        winston.verbose("git webhook req", ctx.request);
+        console.log("git webhook req", ctx.request);
         const event: string = ctx.request.header[HEADER_KEY];
         if (!event) {
             ctx.body = `Sorry，这可能不是一个gitlab的webhook请求`;
