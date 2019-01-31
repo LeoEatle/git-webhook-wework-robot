@@ -4,7 +4,7 @@
  */
 // const request = require("request");
 import * as request from "request";
-
+import * as winston from "winston";
 // 默认的企业微信机器人webhook地址
 const defaultUrl = "https://qyapi.weixin.qq.com/cgi-bin/webhook/";
 
@@ -57,14 +57,14 @@ export default class ChatRobot {
             function (error, response, body: ResponseBody) {
                 if (!error && response.statusCode == 200) {
                     if (body.errcode === 0 && body.errmsg === "ok") {
-                        console.log("机器人成功发送通知", body);
+                        winston.info("机器人成功发送通知", body);
                         return (response);
                     } else {
-                        console.log("机器人发送通知失败", body);
+                        winston.error("机器人发送通知失败", body);
                         throw (body);
                     }
                 } else {
-                    console.log("调用机器人webhook失败", error);
+                    winston.error("调用机器人webhook失败", error);
                     throw (error);
                 }
             }

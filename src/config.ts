@@ -18,7 +18,7 @@ const config: IConfig = {
     jwtSecret: process.env.JWT_SECRET || "your-secret-whatever",
     databaseUrl:
         process.env.DATABASE_URL || "postgres://user:pass@localhost:5432/apidb",
-    chatid: "82c08203-82a6-4824-8319-04a361bc0b2a" // 这个是jenkins-robot
+    chatid: process.env.CHAT_ID || "82c08203-82a6-4824-8319-04a361bc0b2a" // 这个是jenkins-robot
 };
 
 export { config };
