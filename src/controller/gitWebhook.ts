@@ -1,5 +1,10 @@
+/**
+ * git webhook handler
+ * @author LeoEatle
+ */
 import { BaseContext } from "koa";
-
+import ChatRobot from "./chat";
+import { config } from "../config";
 interface Repository {
     name: string;
     description: string;
@@ -37,7 +42,7 @@ interface Body {
     total_commits_count: number;
 }
 
-const HEADER_KEY = "x-event";
+const HEADER_KEY: string = "x-event";
 
 const EVENTS = {
     "Push Hook": "push",
@@ -47,15 +52,42 @@ const EVENTS = {
     "Merge Request Hook": "merge_request",
     "Review Hook": "review"
 };
-export default class GeneralController {
+export default class GitWebhookController {
     public static async getWebhook(ctx: BaseContext) {
         console.log("git webhook req", ctx.request);
-        const body: Body = ctx.request.body;
-        console.log("http body", body);
-        const event: string = ctx.request.header["x-gitlab-event"];
-        const { user_name: string, repository, commits } = body;
+        const event: string = ctx.request.header[HEADER_KEY];
+        if (!event) {
+            ctx.body = `Sorry，这可能不是一个gitlab的webhook请求`;
+        }
+        switch (EVENTS[event]) {
+            case "push":
+                GitWebhookController.handlePush(ctx);
+            default:
+                GitWebhookController.handleDefault(ctx, event);
+        }
+    }
 
-        // switch (event)
-        ctx.body = "收到了";
+    public static handlePush(ctx: BaseContext) {
+        const body: Body = ctx.request.body;
+        const robot: ChatRobot = new ChatRobot(
+            config.chatid
+        );
+        let msg: String;
+        console.log("http body", body);
+        const { user_name, repository, commits} = body;
+        const lastCommit: Commit = commits[0];
+        if (repository.name === "project_test" && user_name === "user_test") {
+            msg = "收到一次webhook test";
+            ctx.body = msg;
+            robot.sendTextMsg(msg);
+        } else {
+            msg = `项目 ${repository.name} 收到了一次push，提交者：${user_name}，最新提交信息：${lastCommit.message}`;
+            ctx.body = msg;
+            robot.sendTextMsg(msg);
+        }
+    }
+
+    public static handleDefault(ctx: BaseContext, event: String) {
+        ctx.body = `Sorry，暂时还没有处理${event}事件`;
     }
 }

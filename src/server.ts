@@ -9,7 +9,7 @@ import * as dotenv from "dotenv";
 // import 'reflect-metadata';
 // import * as PostgressConnectionStringParser from 'pg-connection-string';
 
-import { logger } from "./logging";
+import { logger } from "./middleware/logging";
 import { config } from "./config";
 import { router } from "./routes";
 
@@ -35,6 +35,12 @@ app.use(bodyParser());
 
 // this routes are protected by the JWT middleware, also include middleware to respond with "Method Not Allowed - 405".
 app.use(router.routes());
+
+// 企业微信机器人中间件 待实践
+// 这里的设想是通过存储一些变量在ctx上，最后让中间件去负责通知
+// 缺点：可读性可能不太好？还是更喜欢命令式的调用
+// 优点：机器人通知逻辑单独分离，也许可以把中间件单独作为开源的一部分
+// app.use()
 
 app.listen(config.port);
 

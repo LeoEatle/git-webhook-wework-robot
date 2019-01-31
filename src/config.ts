@@ -8,6 +8,7 @@ export interface IConfig {
     dbsslconn: boolean;
     jwtSecret: string;
     databaseUrl: string;
+    chatid: string; // 暂时机器人id由配置文件管理，之后可以考虑由GUI提供动态配置
 }
 
 const config: IConfig = {
@@ -16,7 +17,8 @@ const config: IConfig = {
     dbsslconn: process.env.NODE_ENV != "development",
     jwtSecret: process.env.JWT_SECRET || "your-secret-whatever",
     databaseUrl:
-        process.env.DATABASE_URL || "postgres://user:pass@localhost:5432/apidb"
+        process.env.DATABASE_URL || "postgres://user:pass@localhost:5432/apidb",
+    chatid: "7048958e-8b4b-4381-9758-af84347c240c" // 这个是jenkins-robot
 };
 
 export { config };

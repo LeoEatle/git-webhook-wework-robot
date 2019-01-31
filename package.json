@@ -18,7 +18,7 @@
     },
     "lint-staged": {
         "*.{js,json,css,less,ts,tsx,jsx,md}": [
-            "prettier --write",
+            "tslint --fix --project ./",
             "git add"
         ]
     },
@@ -45,6 +45,7 @@
         "@types/shelljs": "^0.8.0",
         "commitizen": "^3.0.5",
         "commitlint": "^7.3.2",
+        "lint-staged": "^8.1.1",
         "nodemon": "^1.17.4",
         "shelljs": "^0.8.2",
         "ts-loader": "^5.3.3",
@@ -56,6 +57,7 @@
     },
     "dependencies": {
         "@koa/cors": "^2.2.1",
+        "@types/request": "^2.48.1",
         "class-validator": "^0.9.1",
         "dotenv": "^6.0.0",
         "koa": "^2.5.1",
@@ -66,6 +68,7 @@
         "pg": "^7.4.3",
         "pg-connection-string": "^2.0.0",
         "reflect-metadata": "^0.1.12",
+        "request": "^2.88.0",
         "typeorm": "^0.2.6",
         "winston": "^3.0.0"
     }
