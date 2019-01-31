@@ -35,10 +35,20 @@ interface Repository {
 }
 ```
 
-并且项目有配置严格的tslint 和 lint - staged等检查。
+并且项目有配置严格的tslint和lint-staged等检查。
+
+异步解决方案为`async/await`
+
+git事件handler: `gitWebhook.ts`
+
+chatRobot: `chat.ts`
 
 # TODO
 
-目前只做了`push`和`merge request`事件的handler，以及只做了文字和mardown信息的推送，其余事件和其他类型的推送还需开发。
+* 目前只做了`push`和`merge request`事件的handler，以及只做了文字和mardown信息的推送，其余事件和其他类型的推送还需开发。
 
-并且为了方便其他团队甚至外面开源的使用，考虑使用docker方便自己部署。
+* 为了方便其他团队甚至外面开源的使用，考虑使用docker方便自己部署。
+
+* 考虑是不是可以在配置webhook的地方直接配置机器人id，分别推送
+
+* 进一步考虑是不是可以用GUI统一管理项目和机器人id的关系

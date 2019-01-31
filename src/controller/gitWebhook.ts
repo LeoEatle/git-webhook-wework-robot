@@ -5,6 +5,7 @@
 import { BaseContext } from "koa";
 import ChatRobot from "./chat";
 import { config } from "../config";
+import * as winston from "winston";
 interface Repository {
     name: string;
     description: string;
@@ -90,7 +91,7 @@ const EVENTS = {
 };
 export default class GitWebhookController {
     public static async getWebhook(ctx: BaseContext) {
-        console.log("git webhook req", ctx.request);
+        winston.verbose("git webhook req", ctx.request);
         const event: string = ctx.request.header[HEADER_KEY];
         if (!event) {
             ctx.body = `Sorry，这可能不是一个gitlab的webhook请求`;
@@ -115,7 +116,7 @@ export default class GitWebhookController {
             config.chatid
         );
         let msg: String;
-        console.log("http body", body);
+        winston.info("push http body", body);
         const { user_name, repository, commits, ref} = body;
         if (repository.name === "project_test" && user_name === "user_test") {
             msg = "收到一次webhook test";
@@ -143,7 +144,7 @@ export default class GitWebhookController {
         const robot: ChatRobot = new ChatRobot(
             config.chatid
         );
-        console.log("mr http body", body);
+        winston.info("mr http body", body);
         const actionWords = {
             "open": "发起",
             "close": "关闭",
