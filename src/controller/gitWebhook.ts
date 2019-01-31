@@ -154,6 +154,8 @@ export default class GitWebhookController {
         const attr = object_attributes;
         const mdMsg = `${user.name}在 [${attr.source.name}](${attr.source.web_url}) ${actionWords[attr.action]}了一个MR
                         标题：${attr.title}
+                        源分支：${attr.source_branch}
+                        目标分支：${attr.target_branch}
                         [点此查看](${attr.url})`;
         return await robot.sendMdMsg(mdMsg);
     }
