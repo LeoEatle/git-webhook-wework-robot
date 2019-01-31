@@ -75,17 +75,17 @@ export default class GitWebhookController {
         let msg: String;
         console.log("http body", body);
         const { user_name, repository, commits} = body;
-        const lastCommit: Commit = commits[0];
         if (repository.name === "project_test" && user_name === "user_test") {
             msg = "收到一次webhook test";
             ctx.body = msg;
             return await robot.sendTextMsg(msg);
         } else {
+            const lastCommit: Commit = commits[0];
             msg = `项目 ${repository.name} 收到了一次push，提交者：${user_name}，最新提交信息：${lastCommit.message}`;
             ctx.body = msg;
-            const mdMsg = `项目[${repository.name}](${repository.homepage})收到一次push提交\n
-                            提交者: ; <font color; = \"commit\">${user_name}</font> \n
-                            最新提交信息: <font color; = \"comment\">${lastCommit.message}</font>`;
+            const mdMsg = `项目[${repository.name}](${repository.homepage})收到一次push提交
+                           提交者:\<font color= \"commit\"\>${user_name}\</font\>
+                           最新提交信息: \<font color= \"comment\"\>${lastCommit.message}\</font\>`;
             return await robot.sendMdMsg(mdMsg);
         }
     }
