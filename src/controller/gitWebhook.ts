@@ -26,8 +26,10 @@ interface Commit {
     removed: Array<any>;
 }
 
-// 这是webhook中request.body的接口
-interface Body {
+/**
+ * 收到push通知时的http body
+ */
+interface PushBody {
     object_kind: string;
     before: string;
     after: string;
@@ -40,6 +42,10 @@ interface Body {
     repository: Repository;
     commits: Array<Commit>;
     total_commits_count: number;
+}
+
+interface MRBody {
+
 }
 
 const HEADER_KEY: string = "x-event";
@@ -62,13 +68,19 @@ export default class GitWebhookController {
         switch (EVENTS[event]) {
             case "push":
                 await GitWebhookController.handlePush(ctx);
+            case "merge_request":
+                await GitWebhookController.handleMR(ctx);
             default:
                 await GitWebhookController.handleDefault(ctx, event);
         }
     }
 
+    /**
+     * 处理push事件
+     * @param ctx koa context
+     */
     public static async handlePush(ctx: BaseContext) {
-        const body: Body = ctx.request.body;
+        const body: PushBody = ctx.request.body;
         const robot: ChatRobot = new ChatRobot(
             config.chatid
         );
@@ -88,6 +100,18 @@ export default class GitWebhookController {
                            最新提交信息: \<font color= \"comment\"\>${lastCommit.message}\</font\>`;
             return await robot.sendMdMsg(mdMsg);
         }
+    }
+
+    /**
+     * 处理merge request事件
+     * @param ctx koa context
+     */
+    public static async handleMR(ctx: BaseContext) {
+        const body: PushBody = ctx.request.body;
+        const robot: ChatRobot = new ChatRobot(
+            config.chatid
+        );
+        console.log("mr http body", body);
     }
 
     public static handleDefault(ctx: BaseContext, event: String) {
