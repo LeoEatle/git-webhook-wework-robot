@@ -19,6 +19,15 @@ interface TextMsgInfo {
     };
 }
 
+// 企业机器人发送markdown格式
+interface MarkdownMsgInfo {
+    msgtype: String;
+    chatid?: String;
+    markdown: {
+        content: String;
+    };
+}
+
 // 企业机器人返回的body体
 interface ResponseBody {
     errcode: Number;
@@ -35,44 +44,52 @@ export default class ChatRobot {
         }
     }
 
-    // 发送文本消息
-    public sendTextMsg(msg, options) {
-        const {chatid, ...restOptions} = options || {chatid: undefined};
+    /**
+     * 发送文本消息
+     * @param msg 文本信息
+     * @param chatid 单独通知的群聊id，默认undefined
+     * @param options 对应参数，请参考官方文档
+     */
+    public async sendTextMsg(msg, chatid = undefined, options?) {
         const textMsgInfo: TextMsgInfo = {
             "msgtype": "text",
-            chatid: options && options.chatid,
+            chatid,
             "text": {
                 "content": msg,
-                ...restOptions
+                ...options
             }
         };
-        console.log("this.robotId", this.robotId);
-        console.log("this.url", this.url);
-        return new Promise((resolve, reject) => {
-            request.post(
-                `${this.url}send?key=${this.robotId}`,
-                {
-                    json: textMsgInfo
-                },
-                function (error, response, body: ResponseBody) {
-                    if (!error && response.statusCode == 200) {
-                        if (body.errcode === 0 && body.errmsg === "ok") {
-                            console.log("机器人成功发送通知", body);
-                            resolve(response);
-                        } else {
-                            console.log("机器人发送通知失败", body);
-                            reject(body);
-                        }
+        request.post(
+            `${this.url}send?key=${this.robotId}`,
+            {
+                json: textMsgInfo
+            },
+            function (error, response, body: ResponseBody) {
+                if (!error && response.statusCode == 200) {
+                    if (body.errcode === 0 && body.errmsg === "ok") {
+                        console.log("机器人成功发送通知", body);
+                        return (response);
                     } else {
-                        console.log("error", error);
-                        reject(error);
+                        console.log("机器人发送通知失败", body);
+                        throw (body);
                     }
+                } else {
+                    console.log("调用机器人webhook失败", error);
+                    throw (error);
                 }
-            );
-        });
+            }
+        );
     }
 
-    // TODO: 发送markdown消息
+    /**
+     * 发送markdown信息
+     * @param content Markdown内容
+     * @param chatid 单独通知的群聊id，默认undefined
+     * @param options 其他参数，请参考官方文档
+     */
+    public sendMdMsg(content, chatid = undefined, options?) {
+
+    }
 
     // TODO: 发送图文消息
 

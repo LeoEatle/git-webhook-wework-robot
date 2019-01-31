@@ -61,13 +61,13 @@ export default class GitWebhookController {
         }
         switch (EVENTS[event]) {
             case "push":
-                GitWebhookController.handlePush(ctx);
+                await GitWebhookController.handlePush(ctx);
             default:
-                GitWebhookController.handleDefault(ctx, event);
+                await GitWebhookController.handleDefault(ctx, event);
         }
     }
 
-    public static handlePush(ctx: BaseContext) {
+    public static async handlePush(ctx: BaseContext) {
         const body: Body = ctx.request.body;
         const robot: ChatRobot = new ChatRobot(
             config.chatid
@@ -79,11 +79,11 @@ export default class GitWebhookController {
         if (repository.name === "project_test" && user_name === "user_test") {
             msg = "收到一次webhook test";
             ctx.body = msg;
-            robot.sendTextMsg(msg);
+            return await robot.sendTextMsg(msg);
         } else {
             msg = `项目 ${repository.name} 收到了一次push，提交者：${user_name}，最新提交信息：${lastCommit.message}`;
             ctx.body = msg;
-            robot.sendTextMsg(msg);
+            return await robot.sendTextMsg(msg);
         }
     }
 
