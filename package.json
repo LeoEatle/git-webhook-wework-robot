@@ -17,8 +17,8 @@
         }
     },
     "lint-staged": {
-        "*.{js,json,css,less,ts,tsx,jsx,md}": [
-            "tslint --fix --project ./",
+        "*.{js,css,less,ts,tsx,jsx,md}": [
+            "npm run lint",
             "git add"
         ]
     },

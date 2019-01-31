@@ -36,11 +36,11 @@ export default class ChatRobot {
     }
 
     // 发送文本消息
-    public sendTextMsg(msg, options?) {
-        const {chatid, ...restOptions} = options;
+    public sendTextMsg(msg, options) {
+        const {chatid, ...restOptions} = options || {chatid: undefined};
         const textMsgInfo: TextMsgInfo = {
             "msgtype": "text",
-            chatid,
+            chatid: options && options.chatid,
             "text": {
                 "content": msg,
                 ...restOptions
