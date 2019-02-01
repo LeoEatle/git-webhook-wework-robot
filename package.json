@@ -60,6 +60,7 @@
         "@types/request": "^2.48.1",
         "class-validator": "^0.9.1",
         "dotenv": "^6.0.0",
+        "github-webhook-event-types": "^1.2.1",
         "koa": "^2.5.1",
         "koa-bodyparser": "^4.2.1",
         "koa-helmet": "^4.0.0",

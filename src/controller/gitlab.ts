@@ -1,5 +1,5 @@
 /**
- * git webhook handler
+ * gitlab webhook handler
  * @author LeoEatle
  */
 import { BaseContext } from "koa";

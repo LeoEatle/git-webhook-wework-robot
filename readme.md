@@ -9,8 +9,8 @@
 
 点击项目名称可以跳转到项目页面。
 
-## Merge Request
-如果有人发起了Merge Request，群里推送如图
+## Merge Request
+如果有人发起了Merge Request，群里推送如图
 
 ![](https://tuchuang-1251767583.cos.ap-guangzhou.myqcloud.com/mr-demo.png)
 
@@ -91,4 +91,6 @@ docker start leoytliu/wework-robot
 
 * 考虑是不是可以在配置webhook的地方直接配置机器人id，分别推送
 
-* 进一步考虑是不是可以用GUI统一管理项目和机器人id的关系
+* 进一步考虑是不是可以用GUI统一管理项目和机器人id的关系
+
+* 考虑可以补全gitlab的typing，md太多了，有人帮忙就好了

@@ -7,8 +7,9 @@ const router = new Router();
 router.get("/", controller.general.helloWorld);
 router.get("/jwt", controller.general.getJwtPayload);
 
-router.get("/git", controller.gitWebhook.getWebhook);
-router.post("/git", controller.gitWebhook.getWebhook);
+router.post("/git", controller.gitlab.getWebhook);
+
+router.post("/github", controller.github.getWebhook);
 
 // USER ROUTES
 // router.get('/users', controller.user.getUsers);
