@@ -10,11 +10,7 @@ module.exports = {
     },
     devtool: "source-map",
     plugins: [
-        // new webpack.optimize.UglifyJsPlugin({
-        //     minimize: true,
-        //     sourceMap: true,
-        //     include: /\.min\.js$/
-        // })
+
     ],
     resolve: {
         // Add `.ts` and `.tsx` as a resolvable extension.

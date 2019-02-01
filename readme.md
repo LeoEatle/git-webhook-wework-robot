@@ -1,12 +1,6 @@
 企业微信github / gitlab机器人
 
-# 如何使用
-
-打开gitcode项目（gitlab项目通用），在`Setting` 中选择`Advanced Setting`，选中`Web Hooks`tab ，添加一个webhook。
-
-![](https://tuchuang-1251767583.cos.ap-guangzhou.myqcloud.com/demo.png)
-
-目前在`10.125.60.95`这台机器上试水，所以可以配置url为`http://10.125.60.95:8080/git`
+# 使用效果
 
 ## Push event
 如果有人push了新的提交，群里推送如图
@@ -21,6 +15,16 @@
 ![](https://tuchuang-1251767583.cos.ap-guangzhou.myqcloud.com/mr-demo.png)
 
 Merge Request 会有发起、合并、关闭、重新发起等几种情况，文案会有所不同。
+
+# 如何使用
+
+打开gitcode项目（gitlab项目通用），在`Setting` 中选择`Advanced Setting`，选中`Web Hooks`tab ，添加一个webhook。
+
+![](https://tuchuang-1251767583.cos.ap-guangzhou.myqcloud.com/demo.png)
+
+目前在`10.125.60.95`这台机器上试水，所以可以配置url为`http://10.125.60.95:8080/git`
+
+
 ## 机器人id配置
 目前这台机器上配置的机器人id为`7048958e-8b4b-4381-9758-af84347c240c`
 
@@ -56,6 +60,29 @@ interface Repository {
 git事件handler: `gitWebhook.ts`
 
 chatRobot推送信息相关: `chat.ts`
+
+# 如何部署
+
+**建议将此服务部署在自己的机器上**
+
+1. 使用pm2
+
+使用pm2的方式比较简单，对于这种推送服务已经足够使用。
+
+```shell
+npm install -g pm2
+npm run dist # 先用webpack生成js代码比较好，或者也可以使用node-ts
+pm2 start process.yml
+```
+
+2. 使用docker
+
+目前已经编译出了一份镜像文件为`leoytliu/wework-robot`
+```
+docker start leoytliu/wework-robot
+```
+当然，也可以使用pm2-docker来同时利用到pm2和docker。
+
 
 # TODO
 
