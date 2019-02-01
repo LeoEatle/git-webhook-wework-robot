@@ -22,7 +22,7 @@ module.exports = {
       host : '134.175.32.212',
       ref  : 'origin/master',
       repo : 'git@github.com:LeoEatle/git-webhook-wework-robot.git',
-      path : '/root/wework-robot/git-webhook-wework-robot',
+      path : '/root/pm2/wework-robot',
       'post-deploy' : 'npm install && npm run build && pm2 reload ecosystem.config.js --env production'
     }
   }

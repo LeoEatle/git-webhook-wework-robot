@@ -12,7 +12,8 @@ import * as dotenv from "dotenv";
 import { logger } from "./middleware/logging";
 import { config } from "./config";
 import { router } from "./routes";
-const log = require("./log")("server");
+import customLog from "./log";
+const log = customLog("server");
 
 log.info("开始加载配置");
 // Load environment variables from .env file, where API keys and passwords are configured

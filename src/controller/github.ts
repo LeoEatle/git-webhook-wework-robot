@@ -7,7 +7,8 @@
 import { BaseContext } from "koa";
 import ChatRobot from "./chat";
 import { config } from "../config";
-const log = require("../log")("github handler");
+import customLog from "../log";
+const log = customLog("github handler");
 import { Issues, Push, PullRequest } from "github-webhook-event-types";
 
 const HEADER_KEY: string = "X-GitHub-Event";
