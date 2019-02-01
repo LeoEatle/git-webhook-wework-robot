@@ -4,7 +4,7 @@
  */
 import * as winston from "winston";
 
-export default (label: String) => winston.createLogger({
+export default (label: string) => winston.createLogger({
     transports: [new winston.transports.Console()],
     format: winston.format.combine(
         winston.format.timestamp({

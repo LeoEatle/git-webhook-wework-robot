@@ -8,7 +8,7 @@ import { BaseContext } from "koa";
 import ChatRobot from "./chat";
 import { config } from "../config";
 const log = require("../log")("github handler");
-import { Issue, Push, PullRequest, CommitCommentComment } from "github-webhook-event-types";
+import { Issues, Push, PullRequest } from "github-webhook-event-types";
 
 const HEADER_KEY: string = "X-GitHub-Event";
 
@@ -50,7 +50,7 @@ export default class GithubWebhookController {
             ctx.body = msg;
             return await robot.sendTextMsg(msg);
         } else {
-            const lastCommit: CommitCommentComment = commits[0];
+            const lastCommit = commits[0];
             const branchName = repository.default_branch;
             msg = `项目 ${repository.name} 收到了一次push，提交者：${user_name}，最新提交信息：${lastCommit.message}`;
             ctx.body = msg;
