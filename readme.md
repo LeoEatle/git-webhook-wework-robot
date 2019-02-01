@@ -70,8 +70,8 @@ chatRobot推送信息相关: `chat.ts`
 
 ```shell
 npm install -g pm2
-npm run dist # 先用webpack生成js代码比较好，或者也可以使用node-ts
-pm2 start process.yml
+pm2 deploy production setup
+pm2 deploy production
 ```
 
 2. 使用docker
