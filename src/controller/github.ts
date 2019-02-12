@@ -60,7 +60,10 @@ export default class GithubWebhookController {
         console.log(body);
         const { payload } = body;
         const { repository } = JSON.parse(payload);
-        return await robot.sendTextMsg("成功收到了来自Github的Ping请求，项目名称：" + repository.name);
+        const msg = "成功收到了来自Github的Ping请求，项目名称：" + repository.name;
+        await robot.sendTextMsg(msg);
+        ctx.status = 200;
+        return msg;
     }
 
     /**
