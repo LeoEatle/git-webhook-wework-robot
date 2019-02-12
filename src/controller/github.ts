@@ -21,7 +21,8 @@ const actionWords = {
     "merge": "合并",
     "created": "创建",
     "requested": "请求",
-    "completed": "完成"
+    "completed": "完成",
+    "synchronize": "同步更新"
 };
 export default class GithubWebhookController {
     public static async getWebhook(ctx: BaseContext) {
@@ -81,12 +82,11 @@ export default class GithubWebhookController {
             return await robot.sendTextMsg(msg);
         } else {
             const lastCommit = commits[0];
-            const branchName = repository.default_branch;
             msg = `项目 ${repository.name} 收到了一次push，提交者：${user_name}，最新提交信息：${lastCommit.message}`;
             ctx.body = msg;
             const mdMsg = `项目 [${repository.name}](${repository.url}) 收到一次push提交
                            提交者:  \<font color= \"commit\"\>${user_name}\</font\>
-                           分支:  \<font color= \"commit\"\>${branchName}\</font\>
+                           分支:  \<font color= \"commit\"\>${ref}\</font\>
                            最新提交信息: ${lastCommit.message}`;
             await robot.sendMdMsg(mdMsg);
             ctx.status = 200;
