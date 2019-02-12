@@ -20,13 +20,18 @@ Merge Request 会有发起、合并、关闭、重新发起等几种情况，文
 
 打开gitcode项目（gitlab项目通用），在`Setting` 中选择`Advanced Setting`，选中`Web Hooks`tab ，添加一个webhook。
 
-如果是使用gitlab，请在域名后加上`/git`路径
+请在域名后加上`/git`路径
 
 ![](https://tuchuang-1251767583.cos.ap-guangzhou.myqcloud.com/demo.png)
 
-如果是使用github，请在域名后加上`/github`路径
+如果是使用github，在`Setting`中选择`Webhooks`，选择`Add Webhooks`。
+
+请在域名后加上`/github`路径
+
+![](https://tuchuang-1251767583.cos.ap-guangzhou.myqcloud.com/github-demo.png)
 
 如果你是厂内员工，可以企业微信私信我要服务器地址。
+如果不是，可以使用我在腾讯云搭建的通用服务器，域名为`weworkrobot.xyz`。
 
 ## 机器人id配置
 目前这台机器上配置的机器人id为`7048958e-8b4b-4381-9758-af84347c240c`，这是我的测试机器人。
@@ -99,4 +104,4 @@ docker start leoytliu/wework-robot
 
 * 进一步考虑是不是可以用GUI统一管理项目和机器人id的关系
 
-* 考虑可以补全gitlab的typing，md太多了，有人帮忙就好了
+* 考虑可以补全gitlab的typing，实在太多了，有人帮忙就好了，github已经使用了有人开源整理的typing依赖库
