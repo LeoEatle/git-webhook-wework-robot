@@ -38,8 +38,6 @@ Merge Request 会有发起、合并、关闭、重新发起等几种情况，文
 
 请在域名后加上`/git`路径
 
-![](https://tuchuang-1251767583.cos.ap-guangzhou.myqcloud.com/demo.png)
-
 ## 机器人id配置
 目前这台机器上配置的机器人id为`7048958e-8b4b-4381-9758-af84347c240c`，这是我的测试机器人。
 
