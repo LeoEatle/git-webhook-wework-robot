@@ -104,6 +104,17 @@ export default class GitWebhookController {
         const robotidRe = ROBOTID_REGEX.exec(url);
         const robotid = robotidRe && robotidRe[1];
         robotid && console.log("robotid", robotid);
+        // 检查是否是test事件
+        if (ctx.request.header["x-event-test"] == "true") {
+            // test事件中仅处理push，否则推送太多
+            if (EVENTS[event] == "push") {
+                return await GitWebhookController.handleTest(ctx, ctx.robotid);
+            } else {
+                ctx.status = 200;
+                ctx.body = "其他test请求我可不会管";
+                return;
+            }
+        }
         switch (EVENTS[event]) {
             case "push":
                 return await GitWebhookController.handlePush(ctx, robotid);
@@ -170,6 +181,15 @@ export default class GitWebhookController {
                         目标分支：${attr.target_branch}
                         [查看MR详情](${attr.url})`;
         return await robot.sendMdMsg(mdMsg);
+    }
+
+    public static async handleTest(ctx: BaseContext, robotid?: string) {
+        const msg = "收到一次webhook test";
+        const robot: ChatRobot = new ChatRobot(
+            robotid || config.chatid
+        );
+        await robot.sendTextMsg(msg);
+        return;
     }
 
     public static handleDefault(ctx: BaseContext, event: String) {
