@@ -20,7 +20,11 @@ Merge Request 会有发起、合并、关闭、重新发起等几种情况，文
 
 打开gitcode项目（gitlab项目通用），在`Setting` 中选择`Advanced Setting`，选中`Web Hooks`tab ，添加一个webhook。
 
+如果是使用gitlab，请在域名后加上`/git`路径
+
 ![](https://tuchuang-1251767583.cos.ap-guangzhou.myqcloud.com/demo.png)
+
+如果是使用github，请在域名后加上`/github`路径
 
 如果你是厂内员工，可以企业微信私信我要服务器地址。
 
@@ -85,7 +89,9 @@ docker start leoytliu/wework-robot
 
 # TODO
 
-* 目前只做了`push`和`merge request`事件的handler，以及只做了文字和mardown信息的推送，其余事件和其他类型的推送还需开发。
+* 目前gitlab只做了`push`和`merge request`事件的handler，以及只做了文字和mardown信息的推送，其余事件和其他类型的推送还需开发。
+
+* github推送目前只考虑`push` `pr` `issue`，其他有待添加
 
 * 为了方便其他团队甚至外面开源的使用，考虑使用docker方便自己部署。
 

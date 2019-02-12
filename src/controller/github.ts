@@ -11,8 +11,15 @@ import customLog from "../log";
 const log = customLog("github handler");
 import { Issues, Push, PullRequest } from "github-webhook-event-types";
 
-const HEADER_KEY: string = "X-GitHub-Event";
-
+const HEADER_KEY: string = "x-github-event";
+// 陷入了沉思，为什么gitlab这里没有过去式，而github这里的action全加上了过去式
+const actionWords = {
+    "opened": "发起",
+    "closed": "关闭",
+    "reopened": "重新发起",
+    "edited": "更新",
+    "merge": "合并"
+};
 export default class GithubWebhookController {
     public static async getWebhook(ctx: BaseContext) {
         console.log("git webhook req", ctx.request);
@@ -28,9 +35,28 @@ export default class GithubWebhookController {
                 return await GithubWebhookController.handlePush(ctx);
             case "pull_request":
                 return await GithubWebhookController.handlePR(ctx);
+            case "ping":
+                return await GithubWebhookController.handlePing(ctx);
+            case "issues":
+                return await GithubWebhookController.handleIssue(ctx);
             default:
                 return await GithubWebhookController.handleDefault(ctx, event);
         }
+    }
+
+    /**
+     * 处理ping事件
+     * @param ctx koa context
+     */
+    public static async handlePing(ctx: BaseContext) {
+        const robot: ChatRobot = new ChatRobot(
+            config.chatid
+        );
+        const body: any = ctx.request.body;
+        console.log(body);
+        const { payload } = body;
+        const { repository } = JSON.parse(payload);
+        return await robot.sendTextMsg("成功收到了来自Github的Ping请求，项目名称：" + repository.name);
     }
 
     /**
@@ -38,7 +64,7 @@ export default class GithubWebhookController {
      * @param ctx koa context
      */
     public static async handlePush(ctx: BaseContext) {
-        const body: Push = ctx.request.body;
+        const body: Push = JSON.parse(ctx.request.body.payload);
         const robot: ChatRobot = new ChatRobot(
             config.chatid
         );
@@ -59,7 +85,9 @@ export default class GithubWebhookController {
                            提交者:  \<font color= \"commit\"\>${user_name}\</font\>
                            分支:  \<font color= \"commit\"\>${branchName}\</font\>
                            最新提交信息: ${lastCommit.message}`;
-            return await robot.sendMdMsg(mdMsg);
+            await robot.sendMdMsg(mdMsg);
+            ctx.status = 200;
+            return;
         }
     }
 
@@ -68,29 +96,45 @@ export default class GithubWebhookController {
      * @param ctx koa context
      */
     public static async handlePR(ctx: BaseContext) {
-        const body: PullRequest = ctx.request.body;
+        const body: PullRequest = JSON.parse(ctx.request.body.payload);
         const robot: ChatRobot = new ChatRobot(
             config.chatid
         );
         log.info("pr http body", body);
-        // 陷入了沉思，为什么gitlab这里没有过去式，而github这里的action全加上了过去式
-        const actionWords = {
-            "opened": "发起",
-            "closed": "关闭",
-            "reopened": "重新发起",
-            "edited": "更新",
-            "merge": "合并"
-        };
         const {action, sender, pull_request, repository} = body;
         const mdMsg = `${sender.login}在 [${repository.full_name}](${repository.html_url}) ${actionWords[action]}了PR
                         标题：${pull_request.title}
                         源分支：${pull_request.base.label}
                         目标分支：${pull_request.head.label}
-                        [查看PR详情](${pull_request.url})`;
-        return await robot.sendMdMsg(mdMsg);
+                        [查看PR详情](${pull_request.html_url})`;
+        await robot.sendMdMsg(mdMsg);
+        ctx.status = 200;
+        return;
+    }
+
+    public static async handleIssue(ctx: BaseContext) {
+        const body: Issues = JSON.parse(ctx.request.body.payload);
+        const robot: ChatRobot = new ChatRobot(
+            config.chatid
+        );
+        log.info("issues", body);
+        console.log(body);
+        const { action, issue, repository } = body;
+        if (action !== "opened") {
+            ctx.body = `除非有人开启新的issue，否则无需通知机器人`;
+            return;
+        }
+        const mdMsg = `有人在 [${repository.name}](${repository.html_url}) ${actionWords[action]}了一个issue
+                        标题：${issue.title}
+                        发起人：[${issue.user.login}](${issue.user.html_url})
+                        [查看详情](${issue.html_url})`;
+        await robot.sendMdMsg(mdMsg);
+        ctx.status = 200;
+        return;
     }
 
     public static handleDefault(ctx: BaseContext, event: String) {
+        console.log(ctx.request.body);
         ctx.body = `Sorry，暂时还没有处理${event}事件`;
     }
 }
