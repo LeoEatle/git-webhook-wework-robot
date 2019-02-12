@@ -18,7 +18,10 @@ const actionWords = {
     "closed": "关闭",
     "reopened": "重新发起",
     "edited": "更新",
-    "merge": "合并"
+    "merge": "合并",
+    "created": "创建",
+    "requested": "请求",
+    "completed": "完成"
 };
 export default class GithubWebhookController {
     public static async getWebhook(ctx: BaseContext) {
@@ -112,6 +115,10 @@ export default class GithubWebhookController {
         return;
     }
 
+    /**
+     * 处理issue 事件
+     * @param ctx koa context
+     */
     public static async handleIssue(ctx: BaseContext) {
         const body: Issues = JSON.parse(ctx.request.body.payload);
         const robot: ChatRobot = new ChatRobot(
@@ -133,6 +140,11 @@ export default class GithubWebhookController {
         return;
     }
 
+    /**
+     * 对于未处理的事件，统一走这里
+     * @param ctx koa context
+     * @param event 事件名
+     */
     public static handleDefault(ctx: BaseContext, event: String) {
         console.log(ctx.request.body);
         ctx.body = `Sorry，暂时还没有处理${event}事件`;
