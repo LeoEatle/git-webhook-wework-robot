@@ -43,13 +43,13 @@ export default class GithubWebhookController {
         robotid && console.log("robotid", robotid);
         switch (event) {
             case "push":
-                return await GithubWebhookController.handlePush(ctx);
+                return await GithubWebhookController.handlePush(ctx, robotid);
             case "pull_request":
-                return await GithubWebhookController.handlePR(ctx);
+                return await GithubWebhookController.handlePR(ctx, robotid);
             case "ping":
-                return await GithubWebhookController.handlePing(ctx);
+                return await GithubWebhookController.handlePing(ctx, robotid);
             case "issues":
-                return await GithubWebhookController.handleIssue(ctx);
+                return await GithubWebhookController.handleIssue(ctx, robotid);
             default:
                 return await GithubWebhookController.handleDefault(ctx, event);
         }
