@@ -107,8 +107,8 @@ export default class GithubWebhookController {
         const {action, sender, pull_request, repository} = body;
         const mdMsg = `${sender.login}在 [${repository.full_name}](${repository.html_url}) ${actionWords[action]}了PR
                         标题：${pull_request.title}
-                        源分支：${pull_request.base.label}
-                        目标分支：${pull_request.head.label}
+                        源分支：${pull_request.head.ref}
+                        目标分支：${pull_request.base.ref}
                         [查看PR详情](${pull_request.html_url})`;
         await robot.sendMdMsg(mdMsg);
         ctx.status = 200;
