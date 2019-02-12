@@ -9,6 +9,10 @@
 
 点击项目名称可以跳转到项目页面。
 
+## Issue event
+
+![](https://tuchuang-1251767583.cos.ap-guangzhou.myqcloud.com/issue-demo.png)
+
 ## Merge Request
 如果有人发起了Merge Request，群里推送如图
 
@@ -18,11 +22,7 @@ Merge Request 会有发起、合并、关闭、重新发起等几种情况，文
 
 # 如何使用
 
-打开gitcode项目（gitlab项目通用），在`Setting` 中选择`Advanced Setting`，选中`Web Hooks`tab ，添加一个webhook。
-
-请在域名后加上`/git`路径
-
-![](https://tuchuang-1251767583.cos.ap-guangzhou.myqcloud.com/demo.png)
+## Github
 
 如果是使用github，在`Setting`中选择`Webhooks`，选择`Add Webhooks`。
 
@@ -30,13 +30,22 @@ Merge Request 会有发起、合并、关闭、重新发起等几种情况，文
 
 ![](https://tuchuang-1251767583.cos.ap-guangzhou.myqcloud.com/github-demo.png)
 
-如果你是厂内员工，可以企业微信私信我要服务器地址。
-如果不是，可以使用我在腾讯云搭建的通用服务器，域名为`weworkrobot.xyz`。
+可以使用我在腾讯云搭建的通用服务器，域名为`weworkrobot.xyz`。
+
+## Gitlab/自建Gitlab
+
+打开gitcode项目（gitlab项目通用），在`Setting` 中选择`Advanced Setting`，选中`Web Hooks`tab ，添加一个webhook。
+
+请在域名后加上`/git`路径
+
+![](https://tuchuang-1251767583.cos.ap-guangzhou.myqcloud.com/demo.png)
 
 ## 机器人id配置
 目前这台机器上配置的机器人id为`7048958e-8b4b-4381-9758-af84347c240c`，这是我的测试机器人。
 
-如果需要自定义机器人id，请修改项目根目录下的`.env`
+如果需要自定义机器人id，请在配置webhook url的时候，加上`id`参数，如`http://weworkrobot.xyz/git?id=7048958e-8b4b-4381-9758-af84347c240c`
+
+如果需要修改服务器端的默认机器人id设置，请修改项目根目录下的`.env`
 
 ```conf
 PORT=8080
@@ -65,8 +74,8 @@ interface Repository {
 
 异步解决方案为`async/await`
 
-git事件handler: `gitWebhook.ts`
-
+github事件handler: `github.ts`
+gitlab事件handler: `gilab.ts`
 chatRobot推送信息相关: `chat.ts`
 
 # 如何部署
