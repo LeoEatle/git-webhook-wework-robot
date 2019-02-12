@@ -18,7 +18,11 @@ const actionWords = {
     "closed": "关闭",
     "reopened": "重新发起",
     "edited": "更新",
-    "merge": "合并"
+    "merge": "合并",
+    "created": "创建",
+    "requested": "请求",
+    "completed": "完成",
+    "synchronize": "同步更新"
 };
 export default class GithubWebhookController {
     public static async getWebhook(ctx: BaseContext) {
@@ -78,12 +82,11 @@ export default class GithubWebhookController {
             return await robot.sendTextMsg(msg);
         } else {
             const lastCommit = commits[0];
-            const branchName = repository.default_branch;
             msg = `项目 ${repository.name} 收到了一次push，提交者：${user_name}，最新提交信息：${lastCommit.message}`;
             ctx.body = msg;
             const mdMsg = `项目 [${repository.name}](${repository.url}) 收到一次push提交
                            提交者:  \<font color= \"commit\"\>${user_name}\</font\>
-                           分支:  \<font color= \"commit\"\>${branchName}\</font\>
+                           分支:  \<font color= \"commit\"\>${ref}\</font\>
                            最新提交信息: ${lastCommit.message}`;
             await robot.sendMdMsg(mdMsg);
             ctx.status = 200;
@@ -104,14 +107,18 @@ export default class GithubWebhookController {
         const {action, sender, pull_request, repository} = body;
         const mdMsg = `${sender.login}在 [${repository.full_name}](${repository.html_url}) ${actionWords[action]}了PR
                         标题：${pull_request.title}
-                        源分支：${pull_request.base.label}
-                        目标分支：${pull_request.head.label}
+                        源分支：${pull_request.head.ref}
+                        目标分支：${pull_request.base.ref}
                         [查看PR详情](${pull_request.html_url})`;
         await robot.sendMdMsg(mdMsg);
         ctx.status = 200;
         return;
     }
 
+    /**
+     * 处理issue 事件
+     * @param ctx koa context
+     */
     public static async handleIssue(ctx: BaseContext) {
         const body: Issues = JSON.parse(ctx.request.body.payload);
         const robot: ChatRobot = new ChatRobot(
@@ -133,6 +140,11 @@ export default class GithubWebhookController {
         return;
     }
 
+    /**
+     * 对于未处理的事件，统一走这里
+     * @param ctx koa context
+     * @param event 事件名
+     */
     public static handleDefault(ctx: BaseContext, event: String) {
         console.log(ctx.request.body);
         ctx.body = `Sorry，暂时还没有处理${event}事件`;
