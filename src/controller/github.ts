@@ -24,6 +24,9 @@ const actionWords = {
     "completed": "完成",
     "synchronize": "同步更新"
 };
+
+const ROBOTID_REGEX = /id=([a-zA-Z0-9-]+)/g;
+
 export default class GithubWebhookController {
     public static async getWebhook(ctx: BaseContext) {
         console.log("git webhook req", ctx.request);
@@ -34,6 +37,10 @@ export default class GithubWebhookController {
             log.info(ctx.body);
             return;
         }
+        const url = ctx.request.url;
+        const robotidRe = ROBOTID_REGEX.exec(url);
+        const robotid = robotidRe && robotidRe[1];
+        robotid && console.log("robotid", robotid);
         switch (event) {
             case "push":
                 return await GithubWebhookController.handlePush(ctx);
@@ -51,8 +58,9 @@ export default class GithubWebhookController {
     /**
      * 处理ping事件
      * @param ctx koa context
+     * @param robotid 机器人id
      */
-    public static async handlePing(ctx: BaseContext) {
+    public static async handlePing(ctx: BaseContext, robotid?: string) {
         const robot: ChatRobot = new ChatRobot(
             config.chatid
         );
@@ -69,8 +77,9 @@ export default class GithubWebhookController {
     /**
      * 处理push事件
      * @param ctx koa context
+     * @param robotid 机器人id
      */
-    public static async handlePush(ctx: BaseContext) {
+    public static async handlePush(ctx: BaseContext, robotid?: string) {
         const body: Push = JSON.parse(ctx.request.body.payload);
         const robot: ChatRobot = new ChatRobot(
             config.chatid
@@ -100,8 +109,9 @@ export default class GithubWebhookController {
     /**
      * 处理merge request事件
      * @param ctx koa context
+     * @param robotid 机器人id
      */
-    public static async handlePR(ctx: BaseContext) {
+    public static async handlePR(ctx: BaseContext, robotid?: string) {
         const body: PullRequest = JSON.parse(ctx.request.body.payload);
         const robot: ChatRobot = new ChatRobot(
             config.chatid
@@ -121,8 +131,9 @@ export default class GithubWebhookController {
     /**
      * 处理issue 事件
      * @param ctx koa context
+     * @param robotid 机器人id
      */
-    public static async handleIssue(ctx: BaseContext) {
+    public static async handleIssue(ctx: BaseContext, robotid?: string) {
         const body: Issues = JSON.parse(ctx.request.body.payload);
         const robot: ChatRobot = new ChatRobot(
             config.chatid

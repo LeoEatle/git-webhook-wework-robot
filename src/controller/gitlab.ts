@@ -89,18 +89,26 @@ const EVENTS = {
     "Merge Request Hook": "merge_request",
     "Review Hook": "review"
 };
+
+const ROBOTID_REGEX = /id=([a-zA-Z0-9-]+)/g;
+
 export default class GitWebhookController {
     public static async getWebhook(ctx: BaseContext) {
         console.log("git webhook req", ctx.request);
         const event: string = ctx.request.header[HEADER_KEY];
         if (!event) {
             ctx.body = `Sorry，这可能不是一个gitlab的webhook请求`;
+            return;
         }
+        const url = ctx.request.url;
+        const robotidRe = ROBOTID_REGEX.exec(url);
+        const robotid = robotidRe && robotidRe[1];
+        robotid && console.log("robotid", robotid);
         switch (EVENTS[event]) {
             case "push":
-                return await GitWebhookController.handlePush(ctx);
+                return await GitWebhookController.handlePush(ctx, robotid);
             case "merge_request":
-                return await GitWebhookController.handleMR(ctx);
+                return await GitWebhookController.handleMR(ctx, robotid);
             default:
                 return await GitWebhookController.handleDefault(ctx, event);
         }
@@ -109,14 +117,16 @@ export default class GitWebhookController {
     /**
      * 处理push事件
      * @param ctx koa context
+     * @param robotid 机器人id
      */
-    public static async handlePush(ctx: BaseContext) {
+    public static async handlePush(ctx: BaseContext, robotid?: string) {
         const body: PushBody = ctx.request.body;
         const robot: ChatRobot = new ChatRobot(
-            config.chatid
+            robotid || config.chatid
         );
         let msg: String;
         winston.info("push http body", body);
+        console.log("ctx", ctx);
         const { user_name, repository, commits, ref} = body;
         if (repository.name === "project_test" && user_name === "user_test") {
             msg = "收到一次webhook test";
@@ -139,10 +149,10 @@ export default class GitWebhookController {
      * 处理merge request事件
      * @param ctx koa context
      */
-    public static async handleMR(ctx: BaseContext) {
+    public static async handleMR(ctx: BaseContext, robotid?: string) {
         const body: MRBody = ctx.request.body;
         const robot: ChatRobot = new ChatRobot(
-            config.chatid
+            robotid || config.chatid
         );
         winston.info("mr http body", body);
         const actionWords = {
