@@ -6,7 +6,6 @@
     "scripts": {
         "start": "nodemon --watch 'src/**/*' -e ts,tsx --exec ts-node src/server.ts",
         "build": "webpack --config webpack.config.js --progress",
-        "server": "git pull & npm run build & node ./dist/server.js",
         "lint": "tslint --fix ./src/",
         "commit": "git-cz",
         "precommit": "lint-staged",
