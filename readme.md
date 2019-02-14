@@ -80,7 +80,16 @@ chatRobot推送信息相关: `chat.ts`
 
 **建议将此服务部署在自己的机器上**
 
-1. 使用pm2
+## 最简单的方式
+
+```bash
+git pull http://git.code.oa.com/leoytliu/gitcode-wework-robot.git
+npm install
+npm run build
+pm2 start ./dist/server.js
+```
+
+## 使用pm2
 
 使用pm2的方式比较简单，对于这种推送服务已经足够使用。
 
@@ -90,7 +99,7 @@ pm2 deploy production setup
 pm2 deploy production
 ```
 
-2. 使用docker
+## 使用docker
 
 目前已经编译出了一份镜像文件为`leoytliu/wework-robot`
 ```
