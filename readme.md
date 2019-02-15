@@ -24,17 +24,20 @@ Merge Request 会有发起、合并、关闭、重新发起等几种情况，文
 
 ## Github
 
-如果是使用github，在`Setting`中选择`Webhooks`，选择`Add Webhooks`。
-
-可以使用我在腾讯云搭建的通用服务器，域名为`weworkrobot.xyz`。请在域名后加上`/github`路径
+如果是使用github，在github项目中的`Setting`中选择`Webhooks`，选择`Add Webhooks`，填写url，如`http://weworkrobot.xyz/github?id=7048958e-8b4b-4381-9758-af84347c240c`。
 
 ![](https://tuchuang-1251767583.cos.ap-guangzhou.myqcloud.com/github-demo.png)
 
-然后在企业微信中查看你的机器人id
+域名`weworkrobot.xyz`指向我在腾讯云搭建的通用服务器。
+
+`/github`用来区分github和gitlab，这两者的处理方式不同。
+
+`id`参数代表自定义的机器人id
+
+可以在企业微信中查看你的机器人id
 
 ![](https://tuchuang-1251767583.cos.ap-guangzhou.myqcloud.com/wework-demo.jpg)
 
-如果需要自定义机器人id，请在配置webhook url的时候，加上`id`参数，如`http://weworkrobot.xyz/git?id=7048958e-8b4b-4381-9758-af84347c240c`
 
 ## Gitlab/自建Gitlab
 
@@ -54,7 +57,7 @@ JWT_SECRET=your-secret-whatever
 DATABASE_URL=postgres://user:pass@localhost:5432/apidb
 CHAT_ID=82c08203-82a6-4824-8319-04a361bc0b2a # 改这里！
 ```
-# 项目介绍
+# 项目介绍 && 开发
 
 此项目用于连接git webhook和企业微信机器人webhook，采用koa2 + typescript开发，大部分git webhook 和 企业微信机器人的数据结构已经定义好typing，如：
 
@@ -75,8 +78,17 @@ interface Repository {
 异步解决方案为`async/await`
 
 github事件handler: `github.ts`
+
 gitlab事件handler: `gilab.ts`
+
 chatRobot推送信息相关: `chat.ts`
+
+## 提交
+
+```bash
+git add .
+npm run commit # 让commitlint自动生成commit信息
+```
 
 # 如何部署
 
@@ -85,6 +97,7 @@ chatRobot推送信息相关: `chat.ts`
 ## 最简单的方式
 
 ```bash
+# 在服务器上
 git pull http://git.code.oa.com/leoytliu/gitcode-wework-robot.git
 npm install
 npm run build
@@ -96,6 +109,7 @@ pm2 start ./dist/server.js
 使用pm2的方式比较简单，对于这种推送服务已经足够使用。
 
 ```shell
+# 在本地编辑好配置文件
 npm install -g pm2
 pm2 deploy production setup
 pm2 deploy production
