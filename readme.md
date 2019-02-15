@@ -26,11 +26,15 @@ Merge Request 会有发起、合并、关闭、重新发起等几种情况，文
 
 如果是使用github，在`Setting`中选择`Webhooks`，选择`Add Webhooks`。
 
-请在域名后加上`/github`路径
+可以使用我在腾讯云搭建的通用服务器，域名为`weworkrobot.xyz`。请在域名后加上`/github`路径
 
 ![](https://tuchuang-1251767583.cos.ap-guangzhou.myqcloud.com/github-demo.png)
 
-可以使用我在腾讯云搭建的通用服务器，域名为`weworkrobot.xyz`。
+然后在企业微信中查看你的机器人id
+
+![](https://tuchuang-1251767583.cos.ap-guangzhou.myqcloud.com/wework-demo.jpg)
+
+如果需要自定义机器人id，请在配置webhook url的时候，加上`id`参数，如`http://weworkrobot.xyz/git?id=7048958e-8b4b-4381-9758-af84347c240c`
 
 ## Gitlab/自建Gitlab
 
@@ -40,8 +44,6 @@ Merge Request 会有发起、合并、关闭、重新发起等几种情况，文
 
 ## 机器人id配置
 目前这台机器上配置的机器人id为`7048958e-8b4b-4381-9758-af84347c240c`，这是我的测试机器人。
-
-如果需要自定义机器人id，请在配置webhook url的时候，加上`id`参数，如`http://weworkrobot.xyz/git?id=7048958e-8b4b-4381-9758-af84347c240c`
 
 如果需要修改服务器端的默认机器人id设置，请修改项目根目录下的`.env`
 
