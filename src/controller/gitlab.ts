@@ -91,7 +91,6 @@ const EVENTS = {
     "Review Hook": "review"
 };
 
-const ROBOTID_REGEX = /id=([a-zA-Z0-9-]+)/g;
 
 export default class GitWebhookController {
     public static async getWebhook(ctx: BaseContext) {
@@ -102,6 +101,7 @@ export default class GitWebhookController {
             return;
         }
         const url = ctx.request.url;
+        const ROBOTID_REGEX = /id=([a-zA-Z0-9-]+)/g;
         const robotidRe = ROBOTID_REGEX.exec(url);
         const robotid = robotidRe && robotidRe[1];
         robotid && log.info(robotid);

@@ -25,7 +25,6 @@ const actionWords = {
     "synchronize": "同步更新"
 };
 
-const ROBOTID_REGEX = /id=([a-zA-Z0-9-]+)/g;
 
 export default class GithubWebhookController {
     public static async getWebhook(ctx: BaseContext) {
@@ -38,6 +37,8 @@ export default class GithubWebhookController {
             return;
         }
         const url = ctx.request.url;
+        // 这一行必须要重置regex，不能放在全局！！参考：https://stackoverflow.com/questions/4724701/regexp-exec-returns-null-sporadically
+        const ROBOTID_REGEX = /id=([a-zA-Z0-9-]+)/g;
         const robotidRe = ROBOTID_REGEX.exec(url);
         const robotid = robotidRe && robotidRe[1];
         robotid && console.log("robotid", robotid);
