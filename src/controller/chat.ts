@@ -4,10 +4,11 @@
  */
 // const request = require("request");
 import * as request from "request";
-import * as winston from "winston";
+import customLog from "../log";
+const log = customLog("gitlab handler");
 // 默认的企业微信机器人webhook地址
 const defaultUrl = "https://qyapi.weixin.qq.com/cgi-bin/webhook/";
-
+let count = 0;
 // 企业机器人发送textMsg的格式
 interface TextMsgInfo {
     msgtype: String;
@@ -49,6 +50,7 @@ export default class ChatRobot {
      * @param json json信息
      */
     private async sendHttpRequest(json) {
+        console.log("sendHttpRequest");
         request.post(
             `${this.url}send?key=${this.robotId}`,
             {
@@ -57,18 +59,19 @@ export default class ChatRobot {
             function (error, response, body: ResponseBody) {
                 if (!error && response.statusCode == 200) {
                     if (body.errcode === 0 && body.errmsg === "ok") {
-                        winston.info("机器人成功发送通知", body);
+                        log.info("机器人成功发送通知" + body);
                         return (response);
                     } else {
-                        winston.error("机器人发送通知失败", body);
+                        console.error("机器人发送通知失败", body);
                         throw (body);
                     }
                 } else {
-                    winston.error("调用机器人webhook失败", error);
+                    console.error("调用机器人webhook失败", error);
                     throw (error);
                 }
             }
         );
+        return;
     }
 
     /**
@@ -96,6 +99,7 @@ export default class ChatRobot {
      * @param options 其他参数，请参考官方文档
      */
     public async sendMdMsg(content, chatid = undefined, options?) {
+        console.log("senMdMsg", count++);
         const markdownMsgInfo: MarkdownMsgInfo = {
             "msgtype": "markdown",
             "chatid": chatid,
