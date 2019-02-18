@@ -5,7 +5,8 @@
 import { BaseContext } from "koa";
 import ChatRobot from "./chat";
 import { config } from "../config";
-import * as winston from "winston";
+import customLog from "../log";
+const log = customLog("gitlab handler");
 interface Repository {
     name: string;
     description: string;
@@ -103,7 +104,7 @@ export default class GitWebhookController {
         const url = ctx.request.url;
         const robotidRe = ROBOTID_REGEX.exec(url);
         const robotid = robotidRe && robotidRe[1];
-        robotid && console.log("robotid", robotid);
+        robotid && log.info(robotid);
         // 检查是否是test事件
         if (ctx.request.header["x-event-test"] == "true") {
             // test事件中仅处理push，否则推送太多
@@ -136,7 +137,7 @@ export default class GitWebhookController {
             robotid || config.chatid
         );
         let msg: String;
-        winston.info("push http body", body);
+        log.info(body);
         console.log("ctx", ctx);
         const { user_name, repository, commits, ref} = body;
         if (repository.name === "project_test" && user_name === "user_test") {
@@ -152,7 +153,9 @@ export default class GitWebhookController {
                            提交者:  \<font color= \"commit\"\>${user_name}\</font\>
                            分支:  \<font color= \"commit\"\>${branchName}\</font\>
                            最新提交信息: ${lastCommit.message}`;
-            return await robot.sendMdMsg(mdMsg);
+            await robot.sendMdMsg(mdMsg);
+            ctx.status = 200;
+            return;
         }
     }
 
@@ -165,7 +168,7 @@ export default class GitWebhookController {
         const robot: ChatRobot = new ChatRobot(
             robotid || config.chatid
         );
-        winston.info("mr http body", body);
+        log.info(body);
         const actionWords = {
             "open": "发起",
             "close": "关闭",
@@ -180,7 +183,9 @@ export default class GitWebhookController {
                         源分支：${attr.source_branch}
                         目标分支：${attr.target_branch}
                         [查看MR详情](${attr.url})`;
-        return await robot.sendMdMsg(mdMsg);
+        await robot.sendMdMsg(mdMsg);
+        ctx.status = 200;
+        return;
     }
 
     public static async handleTest(ctx: BaseContext, robotid?: string) {
@@ -189,6 +194,7 @@ export default class GitWebhookController {
             robotid || config.chatid
         );
         await robot.sendTextMsg(msg);
+        ctx.status = 200;
         return;
     }
 
