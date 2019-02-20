@@ -80,6 +80,22 @@ interface MRBody {
     };
 }
 
+interface IssueBody {
+    user: User;
+    repository: Repository;
+    object_attributes: {
+        id: number,
+        title: string,
+        created_at: string,
+        updated_at: string,
+        merge_status: string,
+        description: string,
+        url: string,
+        state: string,
+        action: string // action 可能是open/update/close/reopen
+    };
+}
+
 const HEADER_KEY: string = "x-event";
 
 const EVENTS = {
@@ -91,7 +107,13 @@ const EVENTS = {
     "Review Hook": "review"
 };
 
-
+const actionWords = {
+    "open": "发起",
+    "close": "关闭",
+    "reopen": "重新发起",
+    "update": "更新",
+    "merge": "合并"
+};
 export default class GitWebhookController {
     public static async getWebhook(ctx: BaseContext) {
         console.log("git webhook req", ctx.request);
@@ -121,6 +143,8 @@ export default class GitWebhookController {
                 return await GitWebhookController.handlePush(ctx, robotid);
             case "merge_request":
                 return await GitWebhookController.handleMR(ctx, robotid);
+            case "issue":
+                return await GitWebhookController.handleIssue(ctx, robotid);
             default:
                 return await GitWebhookController.handleDefault(ctx, event);
         }
@@ -169,13 +193,6 @@ export default class GitWebhookController {
             robotid || config.chatid
         );
         log.info(body);
-        const actionWords = {
-            "open": "发起",
-            "close": "关闭",
-            "reopen": "重新发起",
-            "update": "更新",
-            "merge": "合并"
-        };
         const {user, object_attributes} = body;
         const attr = object_attributes;
         const mdMsg = `${user.name}在 [${attr.source.name}](${attr.source.web_url}) ${actionWords[attr.action]}了一个MR
@@ -183,6 +200,23 @@ export default class GitWebhookController {
                         源分支：${attr.source_branch}
                         目标分支：${attr.target_branch}
                         [查看MR详情](${attr.url})`;
+        await robot.sendMdMsg(mdMsg);
+        ctx.status = 200;
+        return;
+    }
+
+    public static async handleIssue(ctx: BaseContext, robotid?: string) {
+        const body: IssueBody = ctx.request.body;
+        const robot: ChatRobot = new ChatRobot(
+            robotid || config.chatid
+        );
+        console.log("[Issue handler]Req Body", body);
+        const {user, object_attributes, repository} = body;
+        const attr = object_attributes;
+        const mdMsg = `有人在 [${user.name}](${repository.url}) ${actionWords[attr.action]}了一个issue
+                        标题：${attr.title}
+                        发起人：${user.name}
+                        [查看详情](${attr.url})`;
         await robot.sendMdMsg(mdMsg);
         ctx.status = 200;
         return;

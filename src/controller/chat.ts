@@ -8,7 +8,6 @@ import customLog from "../log";
 const log = customLog("gitlab handler");
 // 默认的企业微信机器人webhook地址
 const defaultUrl = "https://qyapi.weixin.qq.com/cgi-bin/webhook/";
-let count = 0;
 // 企业机器人发送textMsg的格式
 interface TextMsgInfo {
     msgtype: String;
@@ -50,7 +49,7 @@ export default class ChatRobot {
      * @param json json信息
      */
     private async sendHttpRequest(json) {
-        console.log("sendHttpRequest");
+        console.log("http request");
         request.post(
             `${this.url}send?key=${this.robotId}`,
             {
@@ -99,7 +98,6 @@ export default class ChatRobot {
      * @param options 其他参数，请参考官方文档
      */
     public async sendMdMsg(content, chatid = undefined, options?) {
-        console.log("senMdMsg", count++);
         const markdownMsgInfo: MarkdownMsgInfo = {
             "msgtype": "markdown",
             "chatid": chatid,
