@@ -213,7 +213,7 @@ export default class GitWebhookController {
         console.log("[Issue handler]Req Body", body);
         const {user, object_attributes, repository} = body;
         const attr = object_attributes;
-        const mdMsg = `有人在 [${user.name}](${repository.url}) ${actionWords[attr.action]}了一个issue
+        const mdMsg = `有人在 [${repository.name}](${repository.url}) ${actionWords[attr.action]}了一个issue
                         标题：${attr.title}
                         发起人：${user.name}
                         [查看详情](${attr.url})`;
