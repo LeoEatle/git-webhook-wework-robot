@@ -5,7 +5,7 @@
 ## Push event
 如果有人push了新的提交，群里推送如图
 
-![](https://tuchuang-1251767583.cos.ap-guangzhou.myqcloud.com/push-demo.jpg)
+![](https://tuchuang-1251767583.cos.ap-guangzhou.myqcloud.com/push-demo2.png)
 
 点击项目名称可以跳转到项目页面。
 
