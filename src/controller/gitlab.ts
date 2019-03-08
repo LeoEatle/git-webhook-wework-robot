@@ -214,11 +214,12 @@ export default class GitWebhookController {
         const {user, object_attributes, repository} = body;
         const attr = object_attributes;
         // 由于工蜂的issue webhook在项目url这少了个s，给它暂时hack一下补上
-        const url = attr.url.replace("issue", "issues");
+        // update 这个问题又修复了 见工蜂的issue
+        // const url = attr.url.replace("issue", "issues");
         const mdMsg = `有人在 [${repository.name}](${repository.url}) ${actionWords[attr.action]}了一个issue
                         标题：${attr.title}
                         发起人：${user.name}
-                        [查看详情](${url})`;
+                        [查看详情](${attr.url})`;
         await robot.sendMdMsg(mdMsg);
         ctx.status = 200;
         return;
