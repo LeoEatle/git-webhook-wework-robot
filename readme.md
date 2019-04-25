@@ -25,9 +25,9 @@ Merge Request 会有发起、合并、关闭、重新发起等几种情况，文
 
 打开gitcode项目（gitlab项目通用），在`Setting` 中选择`Advanced Setting`，选中`Web Hooks`tab ，添加一个webhook。
 
-![](https://tuchuang-1251767583.cos.ap-guangzhou.myqcloud.com/git-robot/mr.png?q-sign-algorithm=sha1&q-ak=AKID3YCCXEKbGk6HXgtTPRJ1w23hRFvg3Ocz&q-sign-time=1556117828;1556118728&q-key-time=1556117828;1556118728&q-header-list=&q-url-param-list=&q-signature=c25eabb7684f485ab28955a9f6d17ca23e1ec5e6)
+![](https://tuchuang-1251767583.cos.ap-guangzhou.myqcloud.com/git-robot/mr.png)
 
-url填写`http://10.125.60.95:8080/git?{你的机器人id}`
+url填写`http://10.125.60.95:8080/git?id={你的机器人id}`
 
 请一定要记得填这个id，否则会发到我的机器人上！
 
