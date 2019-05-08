@@ -6,6 +6,8 @@ const router = new Router();
 // GENERAL ROUTES
 router.get("/", controller.general.helloWorld);
 router.get("/jwt", controller.general.getJwtPayload);
+// 用于避开企业微信机器人不支持CORS的问题
+router.post("/sendText", controller.general.sendText);
 
 router.post("/git", controller.gitlab.getWebhook);
 
