@@ -58,7 +58,7 @@ url填写`http://10.125.60.95:8080/git?id={你的机器人id}`
 
 ```bash
 # 在服务器上
-git pull http://git.code.oa.com/leoytliu/gitcode-wework-robot.git
+git clone https://github.com/LeoEatle/git-webhook-wework-robot.git
 npm install
 npm run build
 pm2 start ./dist/server.js
