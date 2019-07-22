@@ -96,7 +96,7 @@ interface IssueBody {
     };
 }
 
-const HEADER_KEY: string = "x-event";
+const HEADER_KEY: string = "x-gitlab-event";
 
 const EVENTS = {
     "Push Hook": "push",
