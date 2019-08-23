@@ -14,6 +14,16 @@
         "bug",
         "code"
       ]
+    },
+    {
+      "login": "liubiantao",
+      "name": "Haitao",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/3268218?v=4",
+      "profile": "https://liubiantao.github.io",
+      "contributions": [
+        "bug",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
