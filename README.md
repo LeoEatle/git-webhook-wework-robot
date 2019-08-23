@@ -62,7 +62,13 @@ pm2 start ./dist/server.js
 
 ## 使用docker
 
-**此处对于外部不可见**
+目前已经编译出了一份镜像文件，地址：https://cloud.docker.com/repository/docker/leoeatle/wxwork-git-robot
+```shell
+// 先登录
+sudo docker pull https://cloud.docker.com/repository/docker/leoeatle/wxwork-git-robot:latest
+docker run -d leoeatle/wxwork-git-robot
+```
+当然，也可以使用pm2-docker来同时利用到pm2和docker。
 
 ## 机器人id配置
 
