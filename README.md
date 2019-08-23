@@ -14,14 +14,11 @@
 1. 重新审视之前的`dockerfile`感觉过于臃肿，不如直接把dist打包进docker，所以进行了修改
 2. 之前的腾讯云服务器没钱了，wework-robot.xyz 宣告停止服务，如有需要请自行搭建（没错，作为腾讯员工没有腾讯云可以用很正常）
 
-# 使用效果
-
-![](https://tuchuang-1251767583.cos.ap-guangzhou.myqcloud.com/push-demo2.png)
 
 # 目前支持的事件
 ## Push event 示例
 
-如上，点击链接会直接跳转到项目。
+![](https://tuchuang-1251767583.cos.ap-guangzhou.myqcloud.com/git-robot/WeWork%20Helper20190823102904.png?q-sign-algorithm=sha1&q-ak=AKID3YCCXEKbGk6HXgtTPRJ1w23hRFvg3Ocz&q-sign-time=1566570648;1566571548&q-key-time=1566570648;1566571548&q-header-list=&q-url-param-list=&q-signature=2303d597df7e3acc423281660935e2df74077972)
 
 ## Issue event 示例
 
