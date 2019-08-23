@@ -1,5 +1,14 @@
 企业微信github / gitlab机器人
 
+# Changelog
+
+2019-7
+1. 由于一直在维护公司内的机器人，有些改动不适用于外部使用。单独分开两个项目，不再作为两个分支管理。
+
+2019-6
+1. 重新审视之前的`dockerfile`感觉过于臃肿，不如直接把dist打包进docker，所以进行了修改
+2. 之前的腾讯云服务器没钱了，wework-robot.xyz 宣告停止服务，如有需要请自行搭建（没错，作为腾讯员工没有腾讯云可以用很正常）
+
 # 使用效果
 
 ![](https://tuchuang-1251767583.cos.ap-guangzhou.myqcloud.com/push-demo2.png)
@@ -21,29 +30,11 @@ Merge Request 会有发起、合并、关闭、重新发起等几种情况，文
 
 # 如何使用
 
-## Code.oa
-
-打开gitcode项目（gitlab项目通用），在`Setting` 中选择`Advanced Setting`，选中`Web Hooks`tab ，添加一个webhook。
-
-![](https://tuchuang-1251767583.cos.ap-guangzhou.myqcloud.com/git-robot/mr.png)
-
-url填写`http://10.125.60.95:8080/git?id={你的机器人id}`
-
-请一定要记得填这个id，否则会发到我的机器人上！
-
-可以在企业微信中查看你的机器人id
-
-![](https://tuchuang-1251767583.cos.ap-guangzhou.myqcloud.com/wework-demo.jpg)
-
-另外，这个IP是一个devnet机器，如果需要自建服务，参考本文后面的部分。
-
 ## Github
 
 如果是使用github，在github项目中的`Setting`中选择`Webhooks`，选择`Add Webhooks`，填写url，如`http://weworkrobot.xyz/github?id=7048958e-8b4b-4381-9758-af84347c240c`。
 
 ![](https://tuchuang-1251767583.cos.ap-guangzhou.myqcloud.com/github-demo.png)
-
-域名`weworkrobot.xyz`指向我在腾讯云搭建的通用服务器。
 
 `/github`用来区分github和gitlab，这两者的处理方式不同。
 
@@ -58,32 +49,15 @@ url填写`http://10.125.60.95:8080/git?id={你的机器人id}`
 
 ```bash
 # 在服务器上
-git clone https://github.com/LeoEatle/git-webhook-wework-robot.git
+git pull https://github.com/LeoEatle/git-webhook-wework-robot.git
 npm install
 npm run build
 pm2 start ./dist/server.js
 ```
 
-## 使用pm2
-
-使用pm2的方式比较简单，对于这种推送服务已经足够使用。
-
-```shell
-# 在本地编辑好配置文件
-npm install -g pm2
-pm2 deploy production setup
-pm2 deploy production
-```
-
 ## 使用docker
 
-目前已经编译出了一份镜像文件为`leoytliu/wework-robot`
-```
-docker start leoytliu/wework-robot
-```
-当然，也可以使用pm2-docker来同时利用到pm2和docker。
-
-
+**此处对于外部不可见**
 
 ## 机器人id配置
 
@@ -117,7 +91,6 @@ interface Repository {
 异步解决方案为`async/await`
 
 github事件handler: `github.ts`
-
 gitlab事件handler: `gilab.ts`
 
 chatRobot推送信息相关: `chat.ts`
