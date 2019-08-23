@@ -1,0 +1,24 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "liubiantao",
+      "name": "Haitao",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/3268218?v=4",
+      "profile": "https://liubiantao.github.io",
+      "contributions": [
+        "bug",
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "git-webhook-wework-robot",
+  "projectOwner": "LeoEatle",
+  "repoType": "github",
+  "repoHost": "https://github.com"
+}
