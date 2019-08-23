@@ -6,6 +6,16 @@
   "commit": false,
   "contributors": [
     {
+      "login": "noname007",
+      "name": "soul11201",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/8514816?v=4",
+      "profile": "http://blog.soul11201.com",
+      "contributions": [
+        "bug",
+        "code"
+      ]
+    },
+    {
       "login": "liubiantao",
       "name": "Haitao",
       "avatar_url": "https://avatars1.githubusercontent.com/u/3268218?v=4",
