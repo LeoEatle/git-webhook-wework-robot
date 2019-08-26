@@ -1,15 +1,23 @@
 FROM node:8
-# RUN mkdir -p /usr/workspace/wework-robot
-# WORKDIR /usr/workspace/wework-robot
 
-# Install app dependencies
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-# where available (npm@5+)
-# COPY package*.json ./
+# 创建 app 目录
+WORKDIR /app
+
+# 安装 app 依赖
+# RUN npm -g install serve
+
+# 使用通配符复制 package.json 与 package-lock.json
+COPY package*.json ./
 
 RUN npm install
+
+# 打包 app 源码
+COPY src /app
+
+# 如需对 react/vue/angular 打包，生成静态文件，使用：
 RUN npm run build
-COPY ./dist .
 
 EXPOSE 8080
-CMD ["node", "server.js" ]
+# 如需部署静态文件，使用：
+#CMD ["serve", "-s", "dist", "-p", "8080"]
+CMD [ "node", "./dist/server.js" ]
