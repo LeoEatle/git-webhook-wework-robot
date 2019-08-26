@@ -18,7 +18,7 @@
 # 目前支持的事件
 ## Push event 示例
 
-![](https://tuchuang-1251767583.cos.ap-guangzhou.myqcloud.com/git-robot/WeWork%20Helper20190823102904.png?q-sign-algorithm=sha1&q-ak=AKID3YCCXEKbGk6HXgtTPRJ1w23hRFvg3Ocz&q-sign-time=1566570648;1566571548&q-key-time=1566570648;1566571548&q-header-list=&q-url-param-list=&q-signature=2303d597df7e3acc423281660935e2df74077972)
+![](https://tuchuang-1251767583.cos.ap-guangzhou.myqcloud.com/git-robot/WeWork%20Helper20190823102904.png)
 
 ## Issue event 示例
 
