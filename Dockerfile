@@ -7,12 +7,9 @@ WORKDIR /app
 # RUN npm -g install serve
 
 # 使用通配符复制 package.json 与 package-lock.json
-COPY package*.json ./
+COPY package*.json webpack.config.js .env tsconfig.json tslint.json src ./app/
 
 RUN npm install
-
-# 打包 app 源码
-COPY src /app
 
 # 如需对 react/vue/angular 打包，生成静态文件，使用：
 RUN npm run build
