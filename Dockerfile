@@ -7,7 +7,7 @@ WORKDIR /app
 # RUN npm -g install serve
 
 # 使用通配符复制 package.json 与 package-lock.json
-COPY package*.json webpack.config.js .env tsconfig.json tslint.json src ./app/
+COPY package*.json webpack.config.js .env tsconfig.json tslint.json src /app/
 
 RUN npm install
 
