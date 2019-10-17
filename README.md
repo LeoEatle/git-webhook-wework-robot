@@ -3,6 +3,13 @@
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
 [![docker build](https://img.shields.io/docker/automated/leoeatle/wxwork-git-robot)](https://cloud.docker.com/repository/docker/leoeatle/wxwork-git-robot/builds)
 
+# Fulture
+正在支持一种用@机器人的方式，关联群聊id和git项目id，这样就无需新建机器人了。不同项目可以统一用一个机器人。
+
+这个功能会以新的路由支持。
+
+但由于@机器人功能还在内测中，之后再把这个功能同步过来。
+
 # Changelog
 2019-8
 1. docker镜像上传到新地址：https://cloud.docker.com/repository/docker/leoeatle/wxwork-git-robot
@@ -12,8 +19,7 @@
 
 2019-6
 1. 重新审视之前的`dockerfile`感觉过于臃肿，不如直接把dist打包进docker，所以进行了修改
-2. 之前的腾讯云服务器没钱了，wework-robot.xyz 宣告停止服务，如有需要请自行搭建（没错，作为腾讯员工没有腾讯云可以用很正常）
-
+2. 之前的腾讯云服务器没钱了，wework-robot.xyz 宣告停止服务，如有需要请自行搭建
 
 # 目前支持的事件
 ## Push event 示例
@@ -34,13 +40,24 @@ Merge Request 会有发起、合并、关闭、重新发起等几种情况，文
 
 ## Github
 
-如果是使用github，在github项目中的`Setting`中选择`Webhooks`，选择`Add Webhooks`，填写url，如`http://weworkrobot.xyz/github?id=7048958e-8b4b-4381-9758-af84347c240c`。
+如果是使用github，在github项目中的`Setting`中选择`Webhooks`，选择`Add Webhooks`，填写url，如`http://{{你的域名或者IP}}/github?id=7048958e-8b4b-4381-9758-af84347c240c`。
 
 ![](https://tuchuang-1251767583.cos.ap-guangzhou.myqcloud.com/github-demo.png)
 
 `/github`用来区分github和gitlab，这两者的处理方式不同。
 
-`id`参数代表自定义的机器人id
+`id`参数代表自定义的机器人id，可以在企业微信的机器人列表中查看，见图：
+
+![](https://tuchuang-1251767583.cos.ap-guangzhou.myqcloud.com/wework-demo.jpg)
+
+## Gitlab
+
+如果是gitlab，将webhook地址改为`http://{{你的域名或者IP}}/git?id={{机器人id}}`
+
+注意这里的路由是**git**
+
+2019-10-17 更新
+现在**gitlab**路由也会指向同样的功能了，所以两种路由都可以
 
 
 # 如何部署
@@ -78,7 +95,7 @@ JWT_SECRET=your-secret-whatever
 DATABASE_URL=postgres://user:pass@localhost:5432/apidb
 CHAT_ID=82c08203-82a6-4824-8319-04a361bc0b2a # 改这里！
 ```
-# 项目介绍 && 开发
+# 项目介绍 && 开发（热烈欢迎提PR）
 
 此项目用于连接git webhook和企业微信机器人webhook，采用koa2 + typescript开发，大部分git webhook 和 企业微信机器人的数据结构已经定义好typing，如：
 
@@ -120,7 +137,7 @@ npm run commit # 让commitlint自动生成commit信息
 
 * ~~考虑是不是可以在配置webhook的地方直接配置机器人id，分别推送~~
 
-* 进一步考虑是不是可以用GUI统一管理项目和机器人id的关系
+* ~~进一步考虑是不是可以用GUI统一管理项目和机器人id的关系~~
 
 * 考虑可以补全gitlab的typing，实在太多了，有人帮忙就好了，github已经使用了有人开源整理的typing依赖库
 
