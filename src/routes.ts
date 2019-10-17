@@ -10,6 +10,7 @@ router.get("/jwt", controller.general.getJwtPayload);
 router.post("/sendText", controller.general.sendText);
 
 router.post("/git", controller.gitlab.getWebhook);
+router.post("/gitlab", controller.gitlab.getWebhook);
 
 router.post("/github", controller.github.getWebhook);
 
