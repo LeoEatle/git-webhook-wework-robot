@@ -11,6 +11,8 @@
 但由于@机器人功能还在内测中，之后再把这个功能同步过来。
 
 # Changelog
+2020-1
+1. 支持了腾讯云云函数的创建
 2019-8
 1. docker镜像上传到新地址：https://cloud.docker.com/repository/docker/leoeatle/wxwork-git-robot
 

@@ -108,6 +108,7 @@ function handleDefault(body, event) {
 }
 
 exports.main_handler = async (event, context, callback) => {
+    console.log('event: ', event);
     if (!(event.headers && event.headers[HEADER_KEY])) {
         return 'Not a github webhook deliver'
     }
@@ -128,6 +129,6 @@ exports.main_handler = async (event, context, callback) => {
         case "issues":
             return handleIssue(payload, robotid);
         default:
-            return handleDefault(payload, event);
+            return handleDefault(payload, gitEvent);
     }
 };
