@@ -98,6 +98,8 @@ interface IssueBody {
 
 const HEADER_KEY: string = "x-gitlab-event";
 
+const HEADER_KEY_V2: string = "X-Gitlab-Event";
+
 const EVENTS = {
     "Push Hook": "push",
     "Tag Push Hook": "tag_push",
@@ -117,7 +119,7 @@ const actionWords = {
 export default class GitWebhookController {
     public static async getWebhook(ctx: BaseContext) {
         console.log("git webhook req", ctx.request);
-        const event: string = ctx.request.header[HEADER_KEY];
+        const event: string = ctx.request.header[HEADER_KEY] || ctx.request.header[HEADER_KEY_V2];
         if (!event) {
             ctx.body = `Sorry，这可能不是一个gitlab的webhook请求`;
             return;
