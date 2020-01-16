@@ -11,6 +11,27 @@
 但由于@机器人功能还在内测中，之后再把这个功能同步过来。
 
 # Changelog
+2020-1
+支持了腾讯云云函数的创建
+
+使用方式：
+1. `git clone https://github.com/LeoEatle/git-webhook-wework-robot.git`
+2. 注册并登陆腾讯云管理后台，新建一个云函数，可以先选个Node的Helloworld模板
+3. 将代码中的`cloud`目录上传，见图
+![](https://tuchuang-1251767583.cos.ap-guangzhou.myqcloud.com/git-robot/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202020-01-16%20%E4%B8%8A%E5%8D%8811.03.40.png)
+
+4. 点击保存（保存后🉑️测试试试）
+![](https://tuchuang-1251767583.cos.ap-guangzhou.myqcloud.com/git-robot/%E4%BC%81%E4%B8%9A%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_0dc98a64-9a31-4bcb-bf67-dbba9ed2327f.png)
+
+5. 选择触发方式，添加新的触发方式，类型选择API网关，保存后得到url
+![](https://tuchuang-1251767583.cos.ap-guangzhou.myqcloud.com/git-robot/add_new.png)
+
+![](https://tuchuang-1251767583.cos.ap-guangzhou.myqcloud.com/git-robot/save_new.png)
+
+6. ok!可以填到Github的webhook里了，类型选择`Send me everything`，也可以自定义，url填上上面的url，**别忘了要在后面加上`?id={你的机器人id}`作为参数**。
+
+可见下面[如何使用](https://github.com/LeoEatle/git-webhook-wework-robot#%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8)。
+
 2019-8
 1. docker镜像上传到新地址：https://cloud.docker.com/repository/docker/leoeatle/wxwork-git-robot
 
