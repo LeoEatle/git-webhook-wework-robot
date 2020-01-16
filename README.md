@@ -28,11 +28,9 @@
 
 ![](https://tuchuang-1251767583.cos.ap-guangzhou.myqcloud.com/git-robot/save_new.png)
 
-6. ok!可以填到Github的webhook里了，类型选择`Send me everything`，也可以自定义
+6. ok!可以填到Github的webhook里了，类型选择`Send me everything`，也可以自定义，url填上上面的url，**别忘了要在后面加上`?id={你的机器人id}`作为参数**。
 
-![](https://tuchuang-1251767583.cos.ap-guangzhou.myqcloud.com/git-robot/github_webhook.png)
-
-
+可见下面[如何使用](https://github.com/LeoEatle/git-webhook-wework-robot#%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8)。
 
 2019-8
 1. docker镜像上传到新地址：https://cloud.docker.com/repository/docker/leoeatle/wxwork-git-robot
