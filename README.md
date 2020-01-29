@@ -3,18 +3,22 @@
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
 [![docker build](https://img.shields.io/docker/automated/leoeatle/wxwork-git-robot)](https://cloud.docker.com/repository/docker/leoeatle/wxwork-git-robot/builds)
 
-# Fulture
-正在支持一种用@机器人的方式，关联群聊id和git项目id，这样就无需新建机器人了。不同项目可以统一用一个机器人。
-
-这个功能会以新的路由支持。
-
-但由于@机器人功能还在内测中，之后再把这个功能同步过来。
-
 # Changelog
 2020-1
 支持了腾讯云云函数的创建
 
 使用方式：
+在github中的`Webhook`配置
+```
+http://link.zhihu.com/?target=https%3A//service-5mv1fv1k-1251767583.gz.apigw.tencentcs.com/release/wechatwork_git_robot?id={robotid}
+```
+其中robotid是你需要推送的机器人id
+
+`id`参数代表自定义的机器人id，可以在企业微信的机器人列表中查看，见图：
+
+![](https://tuchuang-1251767583.cos.ap-guangzhou.myqcloud.com/wework-demo.jpg)
+
+自建云函数方式：
 1. `git clone https://github.com/LeoEatle/git-webhook-wework-robot.git`
 2. 注册并登陆腾讯云管理后台，新建一个云函数，可以先选个Node的Helloworld模板
 3. 将代码中的`cloud`目录上传，见图
