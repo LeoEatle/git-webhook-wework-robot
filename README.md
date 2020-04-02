@@ -10,7 +10,7 @@
 使用方式：
 在github中的`Webhook`配置
 ```
-http://link.zhihu.com/?target=https%3A//service-5mv1fv1k-1251767583.gz.apigw.tencentcs.com/release/wechatwork_git_robot?id={robotid}
+https://service-5mv1fv1k-1251767583.gz.apigw.tencentcs.com/release/wechatwork_git_robot?id={robotid}
 ```
 其中robotid是你需要推送的机器人id
 
