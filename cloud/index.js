@@ -123,7 +123,7 @@ exports.main_handler = async (event, context, callback) => {
         case "ping":
             return await handlePing(payload, robotid);
         case "issues":
-            return handleIssue(payload, robotid);
+            return await handleIssue(payload, robotid);
         default:
             return handleDefault(payload, gitEvent);
     }
