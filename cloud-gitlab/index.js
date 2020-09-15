@@ -51,7 +51,6 @@ async function handlePush(body, robotid) {
         robotid || config.chatid
     );
     let msg;
-    log.info(body);
     const { user_name, repository, commits, ref} = body;
     if (repository.name === "project_test" && user_name === "user_test") {
         msg = "收到一次webhook test";
@@ -77,7 +76,6 @@ async function handleMR(body, robotid) {
     const robot = new ChatRobot(
         robotid || config.chatid
     );
-    log.info(body);
     const {user, object_attributes} = body;
     const attr = object_attributes;
     const mdMsg = `${user.name}在 [${attr.source.name}](${attr.source.web_url}) ${actionWords[attr.action]}了一个MR
@@ -96,9 +94,6 @@ async function handleIssue(body, robotid) {
     console.log("[Issue handler]Req Body", body);
     const {user, object_attributes, repository} = body;
     const attr = object_attributes;
-    // 由于工蜂的issue webhook在项目url这少了个s，给它暂时hack一下补上
-    // update 这个问题又修复了 见工蜂的issue
-    // const url = attr.url.replace("issue", "issues");
     const mdMsg = `有人在 [${repository.name}](${repository.url}) ${actionWords[attr.action]}了一个issue
                     标题：${attr.title}
                     发起人：${user.name}
@@ -120,8 +115,7 @@ exports.main_handler = async (event, context, callback) => {
         return `Sorry，这可能不是一个gitlab的webhook请求`;
     }
     const robotid = event.queryString.id;
-    robotid && log.info(robotid);
-    const payload = event.body;
+    const payload = JSON.parse(event.body); // 我的天啊腾讯云竟然在这里返回一个 string
     console.log('payload', payload);
     // 检查是否是test事件
     if (event.headers["x-event-test"] == "true") {

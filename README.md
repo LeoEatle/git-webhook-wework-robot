@@ -4,6 +4,11 @@
 [![docker build](https://img.shields.io/docker/automated/leoeatle/wxwork-git-robot)](https://cloud.docker.com/repository/docker/leoeatle/wxwork-git-robot/builds)
 
 # Changelog
+2020-9
+支持了 gitlab 的腾讯云函数 git 机器人
+
+API网关地址: https://service-d6if097q-1251767583.gz.apigw.tencentcs.com/release/wechat-work-gitlab-robot?id={robotid}
+
 2020-1
 支持了腾讯云云函数的创建
 
