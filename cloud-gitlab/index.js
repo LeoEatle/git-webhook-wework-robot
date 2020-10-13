@@ -15,7 +15,8 @@ const EVENTS = {
     "Issue Hook": "issue",
     "Note Hook": "note",
     "Merge Request Hook": "merge_request",
-    "Review Hook": "review"
+    "Review Hook": "review",
+    "Wiki Page Hook": "wiki"
 };
 
 const actionWords = {
@@ -102,7 +103,36 @@ async function handleIssue(body, robotid) {
     return;
 }
 
-async function handleDefault(body, event) {
+async function handleNote(body, robotid) {
+    const robot = new ChatRobot(
+        robotid || config.chatid
+    );
+    const { user, project, object_attributes, repository } = body;
+    const { noteable_type, url } = object_attributes;
+    if (noteable_type === 'Issue') {
+        const mdMsg = `${user.name} 在[${repository.name}](${repository.url})评论了一个issue
+                        标题：${object_attributes}
+                        [查看详情](${url})`
+        await robot.sendMdMsg(mdMsg);
+    }
+    return;
+}
+
+async function handleWiki(body, robotid) {
+    const robot = new ChatRobot(
+        robotid || config.chatid
+    );
+    const { user, project, object_attributes, wiki } = body;
+    const { title, url } = object_attributes;
+    const mdMsg = `${user.name} 在[${project.name}](${project.git_http_url})更新了wiki
+                    标题：${title}
+                    [查看详情](${url})`
+    await robot.sendMdMsg(mdMsg);
+    
+    return;
+}
+
+async function handleDefault(event) {
     const msg = `Sorry，暂时还没有处理${event}事件`;
     console.log(msg)
     return;
@@ -134,7 +164,11 @@ exports.main_handler = async (event, context, callback) => {
             return await handleMR(payload, robotid);
         case "issue":
             return await handleIssue(payload, robotid);
+        case "note":
+            return await handleNote(payload, robotid);
+        case "wiki":
+            return await handleWiki(payload, robotid);
         default:
-            return await handleDefault(payload, event);
+            return await handleDefault(gitEvent);
     }
 }
