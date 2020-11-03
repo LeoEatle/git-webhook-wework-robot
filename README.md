@@ -1,9 +1,21 @@
-企业微信github / gitlab机器人
+![git-webhook-wework-robot](https://socialify.git.ci/LeoEatle/git-webhook-wework-robot/image?description=1&font=Raleway&forks=1&language=1&logo=https%3A%2F%2Fwwcdn.weixin.qq.com%2Fnode%2Fwework%2Fimages%2FRtxThumb_2x.c70ae513d7.png&owner=1&pattern=Plus&pulls=1&stargazers=1&theme=Light)
 
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
-[![docker build](https://img.shields.io/docker/automated/leoeatle/wxwork-git-robot)](https://cloud.docker.com/repository/docker/leoeatle/wxwork-git-robot/builds)
+
+<!-- [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
+[![docker build](https://img.shields.io/docker/automated/leoeatle/wxwork-git-robot)](https://cloud.docker.com/repository/docker/leoeatle/wxwork-git-robot/builds) -->
+
+# 快速使用
+
+直接在git项目中配置webhook `https://service-d6if097q-1251767583.gz.apigw.tencentcs.com/release/wechat-work-gitlab-robot?id={robotid}`
+
+其中robotid是你的机器人id，可以在企业微信的机器人列表中查看，见图：
+
+<img src="./docs/wework-demo.jpg" width="500">
 
 # Changelog
+2020-10
+支持了 gitlab 的 review/wiki 事件
+
 2020-9
 支持了 gitlab 的腾讯云函数 git 机器人
 
@@ -19,9 +31,6 @@ API网关地址: https://service-d6if097q-1251767583.gz.apigw.tencentcs.com/rele
 
 **注意：其中robotid是你需要推送的机器人id**
 
-`id`参数代表自定义的机器人id，可以在企业微信的机器人列表中查看，见图：
-
-<img src="./docs/wework-demo.jpg" width="500">
 
 自建云函数方式：
 1. `git clone https://github.com/LeoEatle/git-webhook-wework-robot.git`
@@ -33,8 +42,6 @@ API网关地址: https://service-d6if097q-1251767583.gz.apigw.tencentcs.com/rele
 
 5. 选择触发方式，添加新的触发方式，类型选择API网关，保存后得到url
 ![](./docs/add_new.png)
-
-![](./docs/save_new.png)
 
 6. ok!可以填到Github的webhook里了，类型选择`Send me everything`，也可以自定义，url填上上面的url，**别忘了要在后面加上`?id={你的机器人id}`作为参数**。
 
