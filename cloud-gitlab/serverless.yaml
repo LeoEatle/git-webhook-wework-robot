@@ -1,0 +1,15 @@
+component: scf
+name: ap-guangzhou_gitlab_wechatwork_robot
+org: leoeatle
+app: gitlab-wechatwork-robot
+stage: dev
+inputs:
+  name: gitlab-wechatwork-robot
+  src: ./
+  description: 企业微信git机器人 for gitlab
+  handler: index.main_handler
+  runtime: Nodejs8.9
+  namespace: default
+  region: ap-guangzhou
+  memorySize: 128
+  timeout: 3

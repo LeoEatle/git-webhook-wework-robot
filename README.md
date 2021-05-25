@@ -1,9 +1,29 @@
-企业微信github / gitlab机器人
+![git-webhook-wework-robot](https://socialify.git.ci/LeoEatle/git-webhook-wework-robot/image?description=1&font=Raleway&forks=1&language=1&logo=https%3A%2F%2Fwwcdn.weixin.qq.com%2Fnode%2Fwework%2Fimages%2FRtxThumb_2x.c70ae513d7.png&owner=1&pattern=Plus&pulls=1&stargazers=1&theme=Light)
 
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
-[![docker build](https://img.shields.io/docker/automated/leoeatle/wxwork-git-robot)](https://cloud.docker.com/repository/docker/leoeatle/wxwork-git-robot/builds)
 
-# C
+<!-- [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
+[![docker build](https://img.shields.io/docker/automated/leoeatle/wxwork-git-robot)](https://cloud.docker.com/repository/docker/leoeatle/wxwork-git-robot/builds) -->
+
+# 快速使用
+
+直接在git项目中配置webhook `https://service-d6if097q-1251767583.gz.apigw.tencentcs.com/release/wechat-work-gitlab-robot?id={robotid}`
+
+其中robotid是你的机器人id，可以在企业微信的机器人列表中查看，见图：
+
+<img src="./docs/wework-demo.jpg" width="500">
+
+
+# Changelog
+2020-10
+支持了 gitlab 的 review/wiki 事件
+
+2020-9
+支持了 gitlab 的腾讯云函数 git 机器人
+
+API网关地址: https://service-d6if097q-1251767583.gz.apigw.tencentcs.com/release/wechat-work-gitlab-robot?id={robotid}
+
+自建云函数、设置 webhook 请参考下面 github 的介绍，是一样。
+
 2020-1
 支持了腾讯云云函数
 
@@ -13,24 +33,21 @@
 https://service-5mv1fv1k-1251767583.gz.apigw.tencentcs.com/release/wechatwork_git_robot?id={robotid}
 ```
 其中robotid是你需要推送的机器人id
+在github中的`Webhook`配置 API 的网关地址：https://service-5mv1fv1k-1251767583.gz.apigw.tencentcs.com/release/wechatwork_git_robot?id={robotid}
 
-`id`参数代表自定义的机器人id，可以在企业微信的机器人列表中查看，见图：
+**注意：其中robotid是你需要推送的机器人id**
 
-![](https://tuchuang-1251767583.cos.ap-guangzhou.myqcloud.com/wework-demo.jpg)
 
 自建云函数方式：
 1. `git clone https://github.com/LeoEatle/git-webhook-wework-robot.git`
 2. 注册并登陆腾讯云管理后台，新建一个云函数，可以先选个Node的Helloworld模板
 3. 将代码中的`cloud`目录上传，见图
-![](https://tuchuang-1251767583.cos.ap-guangzhou.myqcloud.com/git-robot/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202020-01-16%20%E4%B8%8A%E5%8D%8811.03.40.png)
+![](./docs/cloud1.png)
 
 4. 点击保存（保存后🉑️测试试试）
-![](https://tuchuang-1251767583.cos.ap-guangzhou.myqcloud.com/git-robot/%E4%BC%81%E4%B8%9A%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_0dc98a64-9a31-4bcb-bf67-dbba9ed2327f.png)
 
 5. 选择触发方式，添加新的触发方式，类型选择API网关，保存后得到url
-![](https://tuchuang-1251767583.cos.ap-guangzhou.myqcloud.com/git-robot/add_new.png)
-
-![](https://tuchuang-1251767583.cos.ap-guangzhou.myqcloud.com/git-robot/save_new.png)
+![](./docs/add_new.png)
 
 6. ok!可以填到Github的webhook里了，类型选择`Send me everything`，也可以自定义，url填上上面的url，**别忘了要在后面加上`?id={你的机器人id}`作为参数**。
 
@@ -49,15 +66,15 @@ https://service-5mv1fv1k-1251767583.gz.apigw.tencentcs.com/release/wechatwork_gi
 # 目前支持的事件
 ## Push event 示例
 
-![](https://tuchuang-1251767583.cos.ap-guangzhou.myqcloud.com/git-robot/WeWork%20Helper20190823102904.png)
+<img src="./docs/push_demo.png" width="500">
 
 ## Issue event 示例
 
-![](https://tuchuang-1251767583.cos.ap-guangzhou.myqcloud.com/git-robot/issue2.png)
+<img src="./docs/issue_demo.png" width="500">
 
 ## Merge Request 示例
 
-![](https://tuchuang-1251767583.cos.ap-guangzhou.myqcloud.com/git-robot/mr2.png)
+<img src="./docs/mr_demo.png" width="500">
 
 Merge Request 会有发起、合并、关闭、重新发起等几种情况，文案会有所不同。
 
@@ -67,13 +84,13 @@ Merge Request 会有发起、合并、关闭、重新发起等几种情况，文
 
 如果是使用github，在github项目中的`Setting`中选择`Webhooks`，选择`Add Webhooks`，填写url，如`http://{{你的域名或者IP}}/github?id=7048958e-8b4b-4381-9758-af84347c240c`。
 
-![](https://tuchuang-1251767583.cos.ap-guangzhou.myqcloud.com/github-demo.png)
+![](./docs/github-demo.png)
 
 `/github`用来区分github和gitlab，这两者的处理方式不同。
 
-`id`参数代表自定义的机器人id，可以在企业微信的机器人列表中查看，见图：
+`id`参数代表自定义的机器人id，可以在企业微信的机器人列表中查看（注意，这个必须要自己新建的机器人才能看到），见图：
 
-![](https://tuchuang-1251767583.cos.ap-guangzhou.myqcloud.com/wework-demo.jpg)
+![](./docs/robot-demo.jpg)
 
 ## Gitlab
 
