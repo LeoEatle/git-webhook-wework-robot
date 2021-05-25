@@ -80,7 +80,7 @@ Merge Request 会有发起、合并、关闭、重新发起等几种情况，文
 
 # 如何使用
 
-## Github
+## Githu
 
 如果是使用github，在github项目中的`Setting`中选择`Webhooks`，选择`Add Webhooks`，填写url，如`http://{{你的域名或者IP}}/github?id=7048958e-8b4b-4381-9758-af84347c240c`。
 
