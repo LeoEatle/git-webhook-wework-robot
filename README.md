@@ -8,7 +8,7 @@
 支持了腾讯云云函数
 
 使用方式：
-在github中的`Webhook`配置
+在github中的`Webhook`配
 ```
 https://service-5mv1fv1k-1251767583.gz.apigw.tencentcs.com/release/wechatwork_git_robot?id={robotid}
 ```
