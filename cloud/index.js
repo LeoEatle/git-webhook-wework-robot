@@ -3,8 +3,8 @@
 const HEADER_KEY = "x-github-event";
 
 const actionWords = {
-    "opened": "发起",
-    "closed": "关闭",
+    "opened": `\<font color= \"info\"\>**发起**\</font\>`,
+    "closed": `\<font color= \"comment\"\>**关闭**\</font\>`,
     "reopened": "重新发起",
     "edited": "更新",
     "merge": "合并",
@@ -65,11 +65,13 @@ async function handlePR(body, robotid) {
     );
     const {action, sender, pull_request, repository} = body;
     const mdMsg = 
-    `\<font color= \"warning\"\>**[${sender.login}](https://github.com/${sender.login})在 [${repository.full_name}](${repository.html_url}) ${actionWords[action]}了PR**\</font\>
+    `\<font color= \"warning\"\>**[${repository.full_name}](${repository.html_url}) 进行了一次PR操作**\</font\>
+> 操作者：[${sender.login}](https://github.com/${sender.login})
+> 操作：${actionWords[action]}
 > 标题：${pull_request.title}
 > 源分支：${pull_request.head.ref}
 > 目标分支：${pull_request.base.ref}
-> [查看PR详情](${pull_request.html_url})`;
+[查看PR详情](${pull_request.html_url})`;
     await robot.sendMdMsg(mdMsg);
     return mdMsg;
 }
@@ -91,7 +93,7 @@ async function handleIssue(body, robotid) {
     `**有人在 [${repository.name}](${repository.html_url}) ${actionWords[action]}了一个issue**
 > 标题：${issue.title}
 > 发起人：[${issue.user.login}](${issue.user.html_url})
-> [查看详情](${issue.html_url})`;
+[查看详情](${issue.html_url})`;
     await robot.sendMdMsg(mdMsg);
     return;
 }
