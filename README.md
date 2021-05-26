@@ -4,7 +4,7 @@
 <!-- [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
 [![docker build](https://img.shields.io/docker/automated/leoeatle/wxwork-git-robot)](https://cloud.docker.com/repository/docker/leoeatle/wxwork-git-robot/builds) -->
 
-# 快速使
+# 快速使用
 
 直接在git项目中配置webhook `https://service-d6if097q-1251767583.gz.apigw.tencentcs.com/release/wechat-work-gitlab-robot?id={robotid}`
 
@@ -80,7 +80,7 @@ Merge Request 会有发起、合并、关闭、重新发起等几种情况，文
 
 # 如何使用
 
-## Githu
+## Github
 
 如果是使用github，在github项目中的`Setting`中选择`Webhooks`，选择`Add Webhooks`，填写url，如`http://{{你的域名或者IP}}/github?id=7048958e-8b4b-4381-9758-af84347c240c`。
 

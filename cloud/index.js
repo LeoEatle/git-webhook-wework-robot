@@ -41,15 +41,15 @@ async function handlePush(body, robotid) {
     const robot = new ChatRobot(
         robotid
     );
-    let msg;
     const { pusher, repository, commits, ref} = body;
     const user_name = pusher.name;
     const lastCommit = commits[0];
-    msg = `项目 ${repository.name} 收到了一次push，提交者：${user_name}，最新提交信息：${lastCommit.message}`;
-    const mdMsg = `项目 [${repository.name}](${repository.url}) 收到一次push提交
-                    提交者:  \<font color= \"commit\"\>${user_name}\</font\>
-                    分支:  \<font color= \"commit\"\>${ref}\</font\>
-                    最新提交信息: ${lastCommit.message}`;
+    const mdMsg = 
+    `\<font color= \"info\"\>**收到一次push提交**\</font\>
+> 项目: [${repository.name}](${repository.url}) 
+> 提交者:  [${user_name}](https://github.com/${user_name})
+> 分支:  [${ref}](${repository.url}/tree/${ref})
+> 信息: ${lastCommit.message}`;
     await robot.sendMdMsg(mdMsg);
     return mdMsg;
 }
@@ -64,11 +64,12 @@ async function handlePR(body, robotid) {
         robotid
     );
     const {action, sender, pull_request, repository} = body;
-    const mdMsg = `${sender.login}在 [${repository.full_name}](${repository.html_url}) ${actionWords[action]}了PR
-                    标题：${pull_request.title}
-                    源分支：${pull_request.head.ref}
-                    目标分支：${pull_request.base.ref}
-                    [查看PR详情](${pull_request.html_url})`;
+    const mdMsg = 
+    `\<font color= \"warning\"\>**[${sender.login}](https://github.com/${sender.login})在 [${repository.full_name}](${repository.html_url}) ${actionWords[action]}了PR**\</font\>
+> 标题：${pull_request.title}
+> 源分支：${pull_request.head.ref}
+> 目标分支：${pull_request.base.ref}
+> [查看PR详情](${pull_request.html_url})`;
     await robot.sendMdMsg(mdMsg);
     return mdMsg;
 }
@@ -86,10 +87,11 @@ async function handleIssue(body, robotid) {
     if (action !== "opened") {
         return `除非有人开启新的issue，否则无需通知机器人`;
     }
-    const mdMsg = `有人在 [${repository.name}](${repository.html_url}) ${actionWords[action]}了一个issue
-                    标题：${issue.title}
-                    发起人：[${issue.user.login}](${issue.user.html_url})
-                    [查看详情](${issue.html_url})`;
+    const mdMsg = 
+    `**有人在 [${repository.name}](${repository.html_url}) ${actionWords[action]}了一个issue**
+> 标题：${issue.title}
+> 发起人：[${issue.user.login}](${issue.user.html_url})
+> [查看详情](${issue.html_url})`;
     await robot.sendMdMsg(mdMsg);
     return;
 }
@@ -123,7 +125,7 @@ exports.main_handler = async (event, context, callback) => {
         case "ping":
             return await handlePing(payload, robotid);
         case "issues":
-            return await handleIssue(payload, robotid);
+            return handleIssue(payload, robotid);
         default:
             return handleDefault(payload, gitEvent);
     }
