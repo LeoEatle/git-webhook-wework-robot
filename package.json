@@ -45,7 +45,7 @@
         "@types/request": "^2.48.1",
         "commitizen": "^3.0.5",
         "commitlint": "^7.3.2",
-        "lint-staged": "^8.1.1",
+        "lint-staged": "^13.1.0",
         "nodemon": "^1.17.4",
         "shelljs": "^0.8.2",
         "ts-loader": "^5.3.3",
